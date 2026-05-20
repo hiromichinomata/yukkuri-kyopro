@@ -3,7 +3,7 @@ name: yukkuri-kyopro-chapter
 description: >-
   Writes and syncs yukkuri-kyopro book chapters (docs/NN.md, solutions in
   Python/Go, Yukkuri Reimu/Marisa dialogue). Use when authoring or editing a
-  chapter, Part, docs/02.md–16.md, 執筆, ゆっくり解説, 競プロ教材, or syncing
+  chapter, Part, docs/00.md–15.md, 執筆, ゆっくり解説, 競プロ教材, or syncing
   solutions with chapter text.
 ---
 
@@ -16,7 +16,7 @@ AtCoder ベースの競プロ教材。**ゆっくり霊夢**（初学者）と *
 1. 対象ファイル番号 `NN` を確定（[reference.md](reference.md) の対応表）
 2. [docs/00-toc.md](../../../docs/00-toc.md) でその Part の節一覧・到達目標・コンテスト目安を読む
 3. 既存の [docs/NN.md](../../../docs/NN.md) と **前の章**（`NN-1`）を読み、トーンと難易度を揃える
-4. 付録のみ（`10`〜`16`）のときは [docs/01.md](../../../docs/01.md) のコード方針を参照し、対談形式は省略可
+4. 付録のみ（`09`〜`15`）のときは [docs/00.md](../../../docs/00.md) のコード方針を参照し、対談形式は省略可
 
 ## 執筆ワークフロー
 
@@ -30,7 +30,7 @@ Task Progress:
 - [ ] 5. solutions/python/NN/ と solutions/go/NN/
 - [ ] 6. 本文から solutions へのリンク
 - [ ] 7. 実行・テスト（動くものだけ）
-- [ ] 8. 問題索引 docs/13.md を更新（推奨問題を書いた場合）
+- [ ] 8. 問題索引 docs/12.md を更新（推奨問題を書いた場合）
 ```
 
 ### Step 1: `docs/NN.md` の骨組み
@@ -41,7 +41,7 @@ Task Progress:
 - 冒頭 1〜2 行の概要
 - **リポジトリ上のコード** 表（Part 本文がある場合）→ `solutions/python/NN/`, `solutions/go/NN/`
 - ナビ: `← [目次](00-toc.md) | 次 → [MM.md](MM.md)（次章名）`
-- 各節は目次の番号に合わせる（例: `## 1.1 …` は Part 1 / `02.md` 用）
+- 各節は目次の番号に合わせる（例: `## 1.1 …` は Part 1 / `01.md` 用）
 
 末尾:
 
@@ -132,7 +132,7 @@ pytest solutions/python/NN/<dir>/  # test_*.py がある場合
 
 ### Step 8: 問題索引
 
-推奨問題を書いたら [docs/13.md](../../../docs/13.md) に行追加:
+推奨問題を書いたら [docs/12.md](../../../docs/12.md) に行追加:
 
 `| NN | 節 | 問題 ID | メモ |`
 
@@ -142,14 +142,14 @@ pytest solutions/python/NN/<dir>/  # test_*.py がある場合
 - `oj` / `acc` で落とした **非公開テストデータ**のコミット
 - `solutions/` だけ更新して **docs のリンク・説明を放置**
 - 霊夢・魔理沙以外のキャラをメイン解説にする（本書は二人のみ）
-- 章番号と Part の取り違え（`02.md` = Part 1 灰色、`01.md` = Part 0）
+- 章番号と Part の取り違え（`01.md` = Part 1 灰色、`00.md` = Part 0）
 
-## 付録（10〜16）
+## 付録（09〜15）
 
 - 対談は省略可。リファレンス・表・コード一覧中心
-- [docs/12.md](../../../docs/12.md) スニペットは [solutions/python/01/](../../../solutions/python/01/) 等を再利用・集約してよい
+- [docs/11.md](../../../docs/11.md) スニペットは [solutions/python/00/](../../../solutions/python/00/) 等を再利用・集約してよい
 
 ## 参照
 
 - ファイル番号・色・Part 対応: [reference.md](reference.md)
-- 執筆済みの型: [docs/01.md](../../../docs/01.md), [solutions/python/01/](../../../solutions/python/01/)
+- 執筆済みの型: [docs/00.md](../../../docs/00.md), [solutions/python/00/](../../../solutions/python/00/)

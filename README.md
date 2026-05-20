@@ -11,29 +11,29 @@ AtCoder（ABC / ARC / AGC）を土台に、レーティング帯ごとに競技�
 
 | ファイル | 内容 |
 |----------|------|
-| [docs/01.md](docs/01.md) | はじめに |
-| [docs/02.md](docs/02.md)〜[09.md](docs/09.md) | 灰色〜赤色（Part 1〜8） |
-| [docs/10.md](docs/10.md)〜[16.md](docs/16.md) | 付録 |
+| [docs/00.md](docs/00.md) | はじめに |
+| [docs/01.md](docs/01.md)〜[08.md](docs/08.md) | 灰色〜赤色（Part 1〜8） |
+| [docs/09.md](docs/09.md)〜[15.md](docs/15.md) | 付録 |
 
 ## 読み方
 
 1. [docs/00-toc.md](docs/00-toc.md) で全体像を把握する。
-2. 自分の AtCoder レーティングに近い Part（[docs/02.md](docs/02.md) 以降）から読む。前の Part は復習用でスキップしてよい。
+2. 自分の AtCoder レーティングに近い Part（[docs/01.md](docs/01.md) 以降）から読む。前の Part は復習用でスキップしてよい。
 3. 各 Part 内は **解説 → ハンズオン → まとめ演習** の順を推奨。
 4. コードは本文ではなく [solutions/](solutions/) を参照し、Python と Go を見比べる。
 
 ## リポジトリ構成
 
 ```
-docs/           # 本文（00-toc.md = 目次、01.md〜 = 各 Part）
+docs/           # 本文（00-toc.md = 目次、00.md〜 = 各 Part）
 solutions/
-  python/       # 章番号ごと（例: 02/ = docs/02.md に対応）
+  python/       # 章番号ごと（例: 02/ = docs/01.md に対応）
   go/
 scripts/        # ローカル検証用（任意）
 ```
 
-- **ファイル番号と Part**: `docs/02.md` = Part 1（灰色）、`docs/03.md` = Part 2（茶色）… と **+1** で対応。
-- **解答の置き場**: `solutions/python/02/abcxxx_a/main.py` のように、章番号 → 問題 ID → ファイル。
+- **ファイル番号と Part**: `docs/NN.md` の **NN** が Part 番号と一致（例: `00.md` = Part 0、`01.md` = Part 1 灰色）。
+- **解答の置き場**: `solutions/python/01/abcxxx_a/main.py` のように、章番号 → 問題 ID → ファイル。
 
 詳細は [solutions/README.md](solutions/README.md) を参照。
 
@@ -47,28 +47,28 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"     # テスト実行時のみ
 
 # 例: Part 0 の A+B を実行
-python3 solutions/python/01/aplusb/main.py < solutions/python/01/aplusb/input.txt
+python3 solutions/python/00/aplusb/main.py < solutions/python/00/aplusb/input.txt
 ```
 
 ### Go
 
 ```bash
-go run ./solutions/go/01/aplusb/ < solutions/python/01/aplusb/input.txt
+go run ./solutions/go/00/aplusb/ < solutions/python/00/aplusb/input.txt
 ```
 
 入出力は AtCoder 形式（標準入力 → 標準出力）を想定しています。
 
 ## 執筆（Cursor Agent）
 
-章の執筆・`solutions/` 同期はプロジェクトスキル **yukkuri-kyopro-chapter**（`.cursor/skills/yukkuri-kyopro-chapter/`）を使う。依頼例: `@yukkuri-kyopro-chapter docs/02.md を執筆してください`。
+章の執筆・`solutions/` 同期はプロジェクトスキル **yukkuri-kyopro-chapter**（`.cursor/skills/yukkuri-kyopro-chapter/`）を使う。依頼例: `@yukkuri-kyopro-chapter docs/01.md を執筆してください`。
 
 ## 開発メモ
 
 | 項目 | 場所 |
 |------|------|
 | 目次・章立て | [docs/00-toc.md](docs/00-toc.md) |
-| 問題と章の対応 | [docs/13.md](docs/13.md)（執筆予定） |
-| スニペット | [docs/12.md](docs/12.md)（執筆予定） |
+| 問題と章の対応 | [docs/12.md](docs/12.md) |
+| スニペット | [docs/11.md](docs/11.md) |
 
 ローカルで AtCoder の問題を試すときは [AtCoder CLI](https://github.com/TatianaAtCoder/atcoder-cli) や [online-judge-tools](https://github.com/kmyk/online-judge-tools) を使い、生成されたテストデータや `contests/` ディレクトリは **コミットしない**（`.gitignore` 済み）。
 
