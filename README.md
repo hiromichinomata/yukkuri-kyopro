@@ -58,6 +58,10 @@ go run ./solutions/go/01/aplusb/ < solutions/python/01/aplusb/input.txt
 
 入出力は AtCoder 形式（標準入力 → 標準出力）を想定しています。
 
+## 執筆（Cursor Agent）
+
+章の執筆・`solutions/` 同期はプロジェクトスキル **yukkuri-kyopro-chapter**（`.cursor/skills/yukkuri-kyopro-chapter/`）を使う。依頼例: `@yukkuri-kyopro-chapter docs/02.md を執筆してください`。
+
 ## 開発メモ
 
 | 項目 | 場所 |
