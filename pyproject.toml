@@ -1,0 +1,16 @@
+[project]
+name = "yukkuri-kyopro"
+version = "0.0.0"
+description = "Sample solutions for yukkuri-kyopro (competitive programming book)"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["solutions/python"]
+pythonpath = ["."]
