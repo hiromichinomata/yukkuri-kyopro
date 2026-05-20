@@ -46,16 +46,14 @@ python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"     # テスト実行時のみ
 
-# 例: サンプル解答を実行
-python3 solutions/python/02/example/main.py < input.txt
+# 例: Part 0 の A+B を実行
+python3 solutions/python/01/aplusb/main.py < solutions/python/01/aplusb/input.txt
 ```
 
 ### Go
 
 ```bash
-go run ./solutions/go/02/example/
-# または
-cd solutions/go/02/example && go run .
+go run ./solutions/go/01/aplusb/ < solutions/python/01/aplusb/input.txt
 ```
 
 入出力は AtCoder 形式（標準入力 → 標準出力）を想定しています。
