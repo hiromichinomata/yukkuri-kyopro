@@ -72,11 +72,6 @@ go run ./solutions/go/00/aplusb/ < solutions/python/00/aplusb/input.txt
 
 ローカルで AtCoder の問題を試すときは [AtCoder CLI](https://github.com/TatianaAtCoder/atcoder-cli) や [online-judge-tools](https://github.com/kmyk/online-judge-tools) を使い、生成されたテストデータや `contests/` ディレクトリは **コミットしない**（`.gitignore` 済み）。
 
-## 貢献
-
-執筆・解答追加は Issue / Pull Request 歓迎です（執筆ルールは整備中）。  
-問題の全文の転載や、ダウンロードした非公開テストのコミットは避けてください。
-
 ## ライセンス
 
 本リポジトリの文書・コードの利用条件は **[LICENSE](LICENSE)** に記載しています（著作権者: Hiromichi NOMATA）。
