@@ -16,8 +16,9 @@ func main() {
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 
-	// 例: var n int
-	// fmt.Fscan(in, &n)
+	var n int
+	fmt.Fscan(in, &n)
 	// 例: xs := make([]int, n); for i := range xs { fmt.Fscan(in, &xs[i]) }
-	_ = in
+	ans := n // ここに解法を書く
+	fmt.Fprintln(out, ans)
 }

@@ -27,7 +27,7 @@ AtCoder（ABC / ARC / AGC）を土台に、レーティング帯ごとに競技�
 ```
 docs/           # 本文（00-toc.md = 目次、00.md〜 = 各 Part）
 solutions/
-  python/       # 章番号ごと（例: 02/ = docs/01.md に対応）
+  python/       # 章番号ごと（例: 01/ = docs/01.md に対応）
   go/
 scripts/        # ローカル検証用（任意）
 ```
@@ -53,6 +53,7 @@ python3 solutions/python/00/aplusb/main.py < solutions/python/00/aplusb/input.tx
 ### Go
 
 ```bash
+# 入力ファイルは Python 側のものを共用
 go run ./solutions/go/00/aplusb/ < solutions/python/00/aplusb/input.txt
 ```
 

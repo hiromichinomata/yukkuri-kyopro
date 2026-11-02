@@ -18,12 +18,15 @@ def ntt(a, invert=False):
         w = pow(G, (MOD - 1) // length, MOD)
         if invert:
             w = pow(w, MOD - 2, MOD)
+        half = length // 2
         for i in range(0, n, length):
-            for j in range(length // 2):
+            wn = 1  # w^j を順に掛けていく
+            for j in range(half):
                 u = a[i + j]
-                v = a[i + j + length // 2] * w % MOD
+                v = a[i + j + half] * wn % MOD
                 a[i + j] = (u + v) % MOD
-                a[i + j + length // 2] = (u - v) % MOD
+                a[i + j + half] = (u - v) % MOD
+                wn = wn * w % MOD
         length <<= 1
     if invert:
         inv_n = pow(n, MOD - 2, MOD)

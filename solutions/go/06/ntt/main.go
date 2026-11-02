@@ -38,11 +38,13 @@ func ntt(a []int, invert bool) []int {
 		}
 		for i := 0; i < n; i += length {
 			half := length / 2
+			wn := 1 // w^j を順に掛けていく
 			for j := 0; j < half; j++ {
 				u := a[i+j]
-				v := a[i+j+half] * w % mod
+				v := a[i+j+half] * wn % mod
 				a[i+j] = (u + v) % mod
 				a[i+j+half] = (u - v + mod) % mod
+				wn = wn * w % mod
 			}
 		}
 	}
