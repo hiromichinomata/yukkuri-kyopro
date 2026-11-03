@@ -4,10 +4,18 @@
 
 | ディレクトリ | 内容 | 本文 |
 |--------------|------|------|
+| [abc084_d/](abc084_d/) | abc084_d（篩 + 累積和） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
+| [abc126_c/](abc126_c/) | abc126_c（全探索・確率） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
 | [abc129_c/](abc129_c/) | abc129_c（階段の上り方 DP） | [3.4](../../../docs/03.md#34-動的計画法入門) |
 | [abc137_d/](abc137_d/) | abc137_d（貪欲 + ヒープ） | [3.9](../../../docs/03.md#39-優先度付きキューダイクストラ入門) |
 | [abc146_c/](abc146_c/) | abc146_c（答えの二分探索） | [3.2](../../../docs/03.md#32-二分探索) |
+| [abc156_d/](abc156_d/) | abc156_d（組合せ mod） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
+| [abc172_d/](abc172_d/) | abc172_d（約数の個数（倍数側から数える）） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
 | [abc177_d/](abc177_d/) | abc177_d（Union-Find・最大成分） | [3.6](../../../docs/03.md#36-union-finddsu) |
+| [abc183_c/](abc183_c/) | abc183_c（順列全探索） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
+| [abc213_c/](abc213_c/) | abc213_c（座標圧縮） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
+| [abc214_d/](abc214_d/) | abc214_d（辺のソート + Union-Find） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
+| [abc222_c/](abc222_c/) | abc222_c（ソート・シミュレーション） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
 | [arc104_a/](arc104_a/) | arc104_a（連立方程式（易しい ARC A）） | [3.10](../../../docs/03.md#310-緑まとめハンズオン) |
 | [binary_search_answer/](binary_search_answer/) | 答えの二分 | [3.2](../../../docs/03.md#32-二分探索) |
 | [deque_window/](deque_window/) | スライディングウィンドウ（deque） | [3.3](../../../docs/03.md#33-スタックキューdeque) |
@@ -29,5 +37,5 @@
 | [tree_dfs/](tree_dfs/) | 木（tree）の DFS | [3.5](../../../docs/03.md#35-グラフの基礎) |
 
 ```bash
-python3 solutions/python/03/abc129_c/main.py < solutions/python/03/abc129_c/input.txt
+python3 solutions/python/03/abc084_d/main.py < solutions/python/03/abc084_d/input.txt
 ```

@@ -130,3 +130,63 @@ def test_agc025_d():
         for (x1, y1), (x2, y2) in itertools.combinations(pts, 2):
             d = (x1 - x2) ** 2 + (y1 - y2) ** 2
             assert d != d1 and d != d2
+
+
+# ---------- Part 1〜3 の推奨問題（考察で式に言い換えたもの） ----------
+def test_abc134_c():
+    for _ in range(200):
+        a = [R.randint(1, 5) for _ in range(R.randint(2, 8))]
+        exp = [str(max(a[:i] + a[i + 1 :])) for i in range(len(a))]
+        assert run("02/abc134_c", f"{len(a)}\n" + "\n".join(map(str, a)) + "\n").split() == exp
+
+
+def test_abc213_c():
+    for _ in range(200):
+        h, w = R.randint(1, 6), R.randint(1, 6)
+        cells = R.sample([(i, j) for i in range(1, h + 1) for j in range(1, w + 1)], R.randint(1, min(5, h * w)))
+        rows = [i for i in range(1, h + 1) if any(a == i for a, _ in cells)]
+        cols = [j for j in range(1, w + 1) if any(b == j for _, b in cells)]
+        exp = []
+        for a, b in cells:  # 空の行・列を消した後の位置
+            exp += [str(rows.index(a) + 1), str(cols.index(b) + 1)]
+        data = f"{h} {w} {len(cells)}\n" + "".join(f"{a} {b}\n" for a, b in cells)
+        assert run("03/abc213_c", data).split() == exp
+
+
+def test_abc214_d():
+    for _ in range(200):
+        n = R.randint(2, 8)
+        edges = [(i + 1, R.randint(1, i), R.randint(1, 9)) for i in range(1, n)]
+        g = [[] for _ in range(n + 1)]
+        for u, v, w in edges:
+            g[u].append((v, w))
+            g[v].append((u, w))
+
+        def path_max(s, t):
+            stack = [(s, 0, 0)]
+            while stack:
+                v, p, mx = stack.pop()
+                if v == t:
+                    return mx
+                stack += [(to, v, max(mx, w)) for to, w in g[v] if to != p]
+
+        exp = sum(path_max(i, j) for i in range(1, n + 1) for j in range(i + 1, n + 1))
+        data = f"{n}\n" + "".join(f"{u} {v} {w}\n" for u, v, w in edges)
+        assert run("03/abc214_d", data).split() == [str(exp)]
+
+
+def test_abc172_d():
+    for n in list(range(1, 60)) + [997, 1000]:
+        exp = sum(k * sum(1 for d in range(1, k + 1) if k % d == 0) for k in range(1, n + 1))
+        assert run("03/abc172_d", f"{n}\n").split() == [str(exp)]
+
+
+def test_abc156_d():
+    from math import comb
+
+    for n in range(2, 40):
+        for _ in range(5):
+            a = R.randint(1, n - 1)
+            b = R.randint(a + 1, n)
+            exp = sum(comb(n, k) for k in range(1, n + 1) if k not in (a, b)) % (10**9 + 7)
+            assert run("03/abc156_d", f"{n} {a} {b}\n").split() == [str(exp)]

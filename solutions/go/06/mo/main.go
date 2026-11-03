@@ -7,14 +7,11 @@ import (
 	"strings"
 )
 
-func main() {
-	a := []int{1, 2, 1, 3, 2, 1, 2}
-	queries := [][2]int{{0, 6}, {2, 5}, {1, 4}}
+// moCountDistinct は各クエリ [l, r]（両端を含む）の異なる値の個数を Mo's algorithm で求める
+func moCountDistinct(a []int, queries [][2]int) []int {
 	n := len(a)
 	block := int(math.Sqrt(float64(n))) + 1
-	type item struct {
-		bid, r, l, idx int
-	}
+	type item struct{ bid, r, l, idx int }
 	items := make([]item, len(queries))
 	for i, q := range queries {
 		bid := q[0] / block
@@ -31,8 +28,7 @@ func main() {
 		return items[i].r < items[j].r
 	})
 	cnt := map[int]int{}
-	curL, curR := 0, 0
-	distinct := 0
+	curL, curR, distinct := 0, 0, 0
 	ans := make([]int, len(queries))
 	add := func(i int) {
 		x := a[i]
@@ -68,5 +64,11 @@ func main() {
 		}
 		ans[it.idx] = distinct
 	}
-	fmt.Println(strings.Trim(fmt.Sprint(ans), "[]"))
+	return ans
+}
+
+func main() {
+	a := []int{1, 2, 1, 3, 2, 1, 2}
+	queries := [][2]int{{0, 6}, {2, 5}, {1, 4}}
+	fmt.Println(strings.Trim(fmt.Sprint(moCountDistinct(a, queries)), "[]"))
 }

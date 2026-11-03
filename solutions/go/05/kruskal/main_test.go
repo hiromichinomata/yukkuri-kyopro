@@ -2,22 +2,12 @@ package main
 
 import (
 	"math/rand"
-	"sort"
 	"testing"
 )
 
-// 本ファイルの DSU を使った最小全域森を、辺の部分集合の全探索と比べる
+// mst は解答の kruskal（辺を重み順に見て DSU で閉路を避ける）
 func mst(n int, es [][3]int) int {
-	es = append([][3]int(nil), es...)
-	sort.Slice(es, func(i, j int) bool { return es[i][2] < es[j][2] })
-	d := NewDSU(n)
-	total := 0
-	for _, e := range es {
-		if d.Unite(e[0], e[1]) {
-			total += e[2]
-		}
-	}
-	return total
+	return kruskal(n, append([][3]int(nil), es...), NewDSU(n))
 }
 
 func TestKruskalDSU(t *testing.T) {
