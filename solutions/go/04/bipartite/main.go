@@ -28,9 +28,16 @@ func isBipartite(g [][]int, n int) bool {
 	return true
 }
 
+func yesNo(b bool) string {
+	if b {
+		return "Yes"
+	}
+	return "No"
+}
+
 func main() {
 	g := [][]int{{1, 3}, {0, 2}, {1, 3}, {0, 2}}
-	fmt.Println(isBipartite(g, 4))
+	fmt.Println(yesNo(isBipartite(g, 4)))
 	g2 := [][]int{{1, 2}, {0, 2}, {0, 1}}
-	fmt.Println(isBipartite(g2, 3))
+	fmt.Println(yesNo(isBipartite(g2, 3)))
 }

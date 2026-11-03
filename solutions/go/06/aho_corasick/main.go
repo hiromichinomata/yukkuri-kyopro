@@ -84,5 +84,7 @@ func main() {
 		ac.add(w)
 	}
 	ac.build()
-	fmt.Println(ac.search("ushers"))
+	for _, h := range ac.search("ushers") {
+		fmt.Println(h.end, h.word)
+	}
 }

@@ -21,9 +21,9 @@ def is_bipartite(g, n):
 
 def main() -> None:
     g = [[1, 3], [0, 2], [1, 3], [0, 2]]
-    print(is_bipartite(g, 4))
+    print("Yes" if is_bipartite(g, 4) else "No")
     g2 = [[1, 2], [0, 2], [0, 1]]
-    print(is_bipartite(g2, 3))
+    print("Yes" if is_bipartite(g2, 3) else "No")
 
 
 if __name__ == "__main__":

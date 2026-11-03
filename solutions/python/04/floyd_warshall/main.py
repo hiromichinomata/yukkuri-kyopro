@@ -15,7 +15,8 @@ def main() -> None:
         [INF, 0, 1],
         [2, INF, 0],
     ]
-    print(floyd(dist))
+    for row in floyd(dist):
+        print(*row)
 
 
 if __name__ == "__main__":

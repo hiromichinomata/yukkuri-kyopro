@@ -27,7 +27,7 @@ def kmp_search(text: str, pat: str) -> list:
 
 
 def main() -> None:
-    print(kmp_search("ababaabab", "aba"))
+    print(*kmp_search("ababaabab", "aba"))
 
 
 if __name__ == "__main__":

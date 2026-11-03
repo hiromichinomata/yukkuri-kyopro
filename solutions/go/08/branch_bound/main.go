@@ -39,9 +39,16 @@ func subsetSumPruned(xs []int, target int) bool {
 	return best
 }
 
+func yesNo(b bool) string {
+	if b {
+		return "Yes"
+	}
+	return "No"
+}
+
 func main() {
 	xs := []int{3, 7, 8, 2, 5}
 	for _, t := range []int{10, 11, 23, 24} {
-		fmt.Println(t, subsetSumPruned(xs, t))
+		fmt.Println(t, yesNo(subsetSumPruned(xs, t)))
 	}
 }

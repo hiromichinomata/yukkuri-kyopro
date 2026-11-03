@@ -12,9 +12,15 @@ func dfs(v int, g [][]int, seen []bool) {
 }
 
 func main() {
-	// 0 — 1,2 の木で DFS（例）
+	// 0 — 1, 2 の木で DFS（例）。たどり着いた頂点の数を出力する
 	g := [][]int{{1, 2}, {}, {}}
 	seen := make([]bool, 3)
 	dfs(0, g, seen)
-	fmt.Println(seen)
+	cnt := 0
+	for _, s := range seen {
+		if s {
+			cnt++
+		}
+	}
+	fmt.Println(cnt)
 }

@@ -42,9 +42,17 @@ func (d *DSU) Same(a, b int) bool {
 	return d.Find(a) == d.Find(b)
 }
 
+func yesNo(b bool) string {
+	if b {
+		return "Yes"
+	}
+	return "No"
+}
+
 func main() {
 	d := NewDSU(5)
 	d.Unite(0, 1)
 	d.Unite(2, 3)
-	fmt.Println(d.Same(0, 1), d.Same(0, 2))
+	fmt.Println(yesNo(d.Same(0, 1)))
+	fmt.Println(yesNo(d.Same(0, 2)))
 }

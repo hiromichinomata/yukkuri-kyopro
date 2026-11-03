@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func zAlgorithm(s string) []int {
 	n := len(s)
@@ -25,5 +28,5 @@ func zAlgorithm(s string) []int {
 }
 
 func main() {
-	fmt.Println(zAlgorithm("aaaaabaa"))
+	fmt.Println(strings.Trim(fmt.Sprint(zAlgorithm("aaaaabaa")), "[]"))
 }

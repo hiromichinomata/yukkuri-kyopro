@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const mod = 1_000_000_007
 
@@ -56,5 +59,7 @@ func powMod(a, e int) int {
 
 func main() {
 	A := [][]int{{2, 1, 5}, {1, 1, 3}}
-	fmt.Println(gauss(A))
+	for _, row := range gauss(A) {
+		fmt.Println(strings.Trim(fmt.Sprint(row), "[]"))
+	}
 }

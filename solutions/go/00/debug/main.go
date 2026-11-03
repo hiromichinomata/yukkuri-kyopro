@@ -10,5 +10,5 @@ func debug(args ...any) {
 }
 
 func main() {
-	debug("local only", true)
+	debug("local only", 42) // 標準エラー出力なので、提出しても判定には影響しない
 }

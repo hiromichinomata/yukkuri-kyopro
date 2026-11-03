@@ -47,6 +47,8 @@ func convexHull(pts []point) []point {
 }
 
 func main() {
-	pts := []point{{0, 0}, {1, 0}, {0, 1}, {1, 1}}
-	fmt.Println(convexHull(pts))
+	pts := []point{{0, 0}, {2, 0}, {0, 2}, {2, 2}, {1, 1}} // (1, 1) は内側
+	for _, p := range convexHull(pts) {
+		fmt.Println(p.x, p.y)
+	}
 }

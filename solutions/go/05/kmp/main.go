@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func buildNext(p string) []int {
 	m := len(p)
@@ -38,5 +41,5 @@ func kmpSearch(text, pat string) []int {
 }
 
 func main() {
-	fmt.Println(kmpSearch("ababaabab", "aba"))
+	fmt.Println(strings.Trim(fmt.Sprint(kmpSearch("ababaabab", "aba")), "[]"))
 }

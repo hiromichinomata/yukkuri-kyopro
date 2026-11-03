@@ -18,7 +18,7 @@ def main() -> None:
     n = 4
     g = [[1, 2], [3], [3], []]
     indeg = [0, 1, 1, 2]
-    print(topological_sort(n, g, indeg))
+    print(*topological_sort(n, g, indeg))
 
 
 if __name__ == "__main__":

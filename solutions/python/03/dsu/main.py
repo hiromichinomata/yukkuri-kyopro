@@ -27,7 +27,8 @@ def main() -> None:
     dsu = DSU(5)
     dsu.unite(0, 1)
     dsu.unite(2, 3)
-    print(dsu.same(0, 1), dsu.same(0, 2))
+    print("Yes" if dsu.same(0, 1) else "No")
+    print("Yes" if dsu.same(0, 2) else "No")
 
 
 if __name__ == "__main__":

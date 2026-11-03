@@ -10,7 +10,7 @@ STUDY_TEMPLATE = """\
 
 
 def main() -> None:
-    print(STUDY_TEMPLATE)
+    print(STUDY_TEMPLATE, end="")  # テンプレ自体が改行で終わる
 
 
 if __name__ == "__main__":

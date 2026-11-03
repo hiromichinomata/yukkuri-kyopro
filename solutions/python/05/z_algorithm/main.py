@@ -13,7 +13,7 @@ def z_algorithm(s: str) -> list:
 
 
 def main() -> None:
-    print(z_algorithm("aaaaabaa"))
+    print(*z_algorithm("aaaaabaa"))
 
 
 if __name__ == "__main__":

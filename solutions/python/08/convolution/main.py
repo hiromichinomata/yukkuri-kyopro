@@ -49,7 +49,7 @@ def conv(a, b):
 def main() -> None:
     a = [1, 2, 3]
     b = [4, 5]
-    print(conv(a, b))
+    print(*conv(a, b))
 
 
 if __name__ == "__main__":

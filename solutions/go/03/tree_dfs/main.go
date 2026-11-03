@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func dfs(v, parent int, g [][]int, depth []int) {
 	if parent == -1 {
@@ -20,5 +23,5 @@ func main() {
 	g := [][]int{{1, 2}, {0, 3}, {0}, {1}}
 	depth := make([]int, 4)
 	dfs(0, -1, g, depth)
-	fmt.Println(depth)
+	fmt.Println(strings.Trim(fmt.Sprint(depth), "[]"))
 }

@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func scc(g [][]int, n int) ([]int, int) {
 	order := []int{}
@@ -60,5 +63,6 @@ func main() {
 		g[e[0]] = append(g[e[0]], e[1])
 	}
 	comp, k := scc(g, n)
-	fmt.Println(k, comp)
+	fmt.Println(k)
+	fmt.Println(strings.Trim(fmt.Sprint(comp), "[]"))
 }

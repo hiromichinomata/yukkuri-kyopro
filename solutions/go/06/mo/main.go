@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"sort"
+	"strings"
 )
 
 func main() {
@@ -67,5 +68,5 @@ func main() {
 		}
 		ans[it.idx] = distinct
 	}
-	fmt.Println(ans)
+	fmt.Println(strings.Trim(fmt.Sprint(ans), "[]"))
 }

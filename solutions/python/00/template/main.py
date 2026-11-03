@@ -1,16 +1,17 @@
 import sys
 
+# よく使う定数
 INF = 10**18
 MOD = 998244353
 
 
 def main() -> None:
     input = sys.stdin.readline
-    # 例: 1 行に n
-    # n = int(input())
+    n = int(input())  # 例: 1 行に n
     # 例: 1 行に n 個の整数
     # xs = list(map(int, input().split()))
-    pass
+    ans = n  # ここに解法を書く
+    print(ans)
 
 
 if __name__ == "__main__":

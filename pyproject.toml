@@ -13,4 +13,5 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["solutions/python", "tests"]
+markers = ["parity: Python と Go の出力比較（Go のビルドに 1 分ほどかかる）"]
 pythonpath = ["."]

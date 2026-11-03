@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func bfs01(g [][]struct{ to, cost int }, start, n int) []int {
 	const INF = 1 << 60
@@ -48,5 +51,5 @@ func main() {
 	add(2, 1, 1)
 	add(2, 3, 0)
 	add(3, 2, 0)
-	fmt.Println(bfs01(g, 0, n))
+	fmt.Println(strings.Trim(fmt.Sprint(bfs01(g, 0, n)), "[]"))
 }

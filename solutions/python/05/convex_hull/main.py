@@ -20,8 +20,9 @@ def convex_hull(points):
 
 
 def main() -> None:
-    pts = [(0, 0), (1, 0), (0, 1), (1, 1), (0.5, 0.5)]
-    print(convex_hull(pts))
+    pts = [(0, 0), (2, 0), (0, 2), (2, 2), (1, 1)]  # (1, 1) は内側
+    for x, y in convex_hull(pts):
+        print(x, y)
 
 
 if __name__ == "__main__":

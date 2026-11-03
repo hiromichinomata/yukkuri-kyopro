@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	n := 5
@@ -11,5 +14,7 @@ func main() {
 		g[u] = append(g[u], v)
 		g[v] = append(g[v], u)
 	}
-	fmt.Println(g)
+	for v := 0; v < n; v++ {
+		fmt.Println(v, ":", strings.Trim(fmt.Sprint(g[v]), "[]"))
+	}
 }

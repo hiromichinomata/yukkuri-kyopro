@@ -50,8 +50,8 @@ def convolution(a, b):
 
 
 def main() -> None:
-    print(convolution([1, 1], [1, 1]))
-    print(convolution([1, 2, 3], [4, 5])[:6])
+    print(*convolution([1, 1], [1, 1]))
+    print(*convolution([1, 2, 3], [4, 5]))
 
 
 if __name__ == "__main__":

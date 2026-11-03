@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const mod = 998244353
 const g = 3
@@ -77,5 +80,6 @@ func convolution(a, b []int) []int {
 }
 
 func main() {
-	fmt.Println(convolution([]int{1, 1}, []int{1, 1}))
+	fmt.Println(strings.Trim(fmt.Sprint(convolution([]int{1, 1}, []int{1, 1})), "[]"))
+	fmt.Println(strings.Trim(fmt.Sprint(convolution([]int{1, 2, 3}, []int{4, 5})), "[]"))
 }

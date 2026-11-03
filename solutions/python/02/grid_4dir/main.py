@@ -16,7 +16,8 @@ def main() -> None:
         ni, nj = si + di[k], sj + dj[k]
         if 0 <= ni < h and 0 <= nj < w and grid[ni][nj] != "#":
             ok.append((ni, nj))
-    print(ok)
+    for ni, nj in ok:
+        print(ni, nj)
 
 
 if __name__ == "__main__":

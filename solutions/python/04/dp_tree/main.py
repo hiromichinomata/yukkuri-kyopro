@@ -16,7 +16,7 @@ def main() -> None:
     g = [[1, 2], [0, 3], [0], [1]]
     dp = [0] * 4
     dfs(0, -1, g, dp)
-    print(dp)
+    print(*dp)
 
 
 if __name__ == "__main__":

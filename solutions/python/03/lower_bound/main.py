@@ -14,8 +14,7 @@ def lower_bound(a: list, x: int) -> int:
 
 def main() -> None:
     a = [1, 3, 3, 5, 7]
-    print(bisect.bisect_left(a, 4))
-    print(lower_bound(a, 4))
+    print(bisect.bisect_left(a, 4), lower_bound(a, 4))  # 標準ライブラリと自作が一致
 
 
 if __name__ == "__main__":

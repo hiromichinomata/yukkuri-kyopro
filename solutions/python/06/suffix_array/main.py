@@ -21,8 +21,9 @@ def suffix_array(s: str) -> list:
 def main() -> None:
     s = "banana"
     sa = suffix_array(s)
-    print(sa)
-    print([s[i:] for i in sa])
+    print(*sa)
+    for i in sa:
+        print(s[i:])
 
 
 if __name__ == "__main__":

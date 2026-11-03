@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const mod = 998244353
 const g = 3
@@ -75,5 +78,5 @@ func conv(a, b []int) []int {
 }
 
 func main() {
-	fmt.Println(conv([]int{1, 2, 3}, []int{4, 5}))
+	fmt.Println(strings.Trim(fmt.Sprint(conv([]int{1, 2, 3}, []int{4, 5})), "[]"))
 }

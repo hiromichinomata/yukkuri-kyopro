@@ -14,8 +14,10 @@ def analyze_constraints(n, q, vmax, graph=False):
 
 
 def main() -> None:
-    print(analyze_constraints(18, 0, 10**9))
-    print(analyze_constraints(200000, 200000, 10**9, graph=True))
+    for hint in analyze_constraints(18, 0, 10**9):
+        print(hint)
+    for hint in analyze_constraints(200000, 200000, 10**9, graph=True):
+        print(hint)
 
 
 if __name__ == "__main__":

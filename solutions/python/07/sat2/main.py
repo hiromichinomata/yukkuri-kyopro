@@ -60,10 +60,10 @@ def main() -> None:
     add_clause(imp, 0, 2)
     add_clause(imp, 1, 2)
     add_clause(imp, 3, 0)
-    print(sat2_solvable(imp, 2))
+    print("Yes" if sat2_solvable(imp, 2) else "No")
     # さらに (¬x0 ∨ ¬x1) を足すと充足不能
     add_clause(imp, 1, 3)
-    print(sat2_solvable(imp, 2))
+    print("Yes" if sat2_solvable(imp, 2) else "No")
 
 
 if __name__ == "__main__":

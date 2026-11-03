@@ -22,7 +22,7 @@ def subset_sum_pruned(xs, target):
 def main() -> None:
     xs = [3, 7, 8, 2, 5]
     for t in [10, 11, 23, 24]:
-        print(t, subset_sum_pruned(xs, t))
+        print(t, "Yes" if subset_sum_pruned(xs, t) else "No")
 
 
 if __name__ == "__main__":

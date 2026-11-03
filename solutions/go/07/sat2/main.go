@@ -70,14 +70,21 @@ func sat2Solvable(implications [][2]int, nVars int) bool {
 	return true
 }
 
+func yesNo(b bool) string {
+	if b {
+		return "Yes"
+	}
+	return "No"
+}
+
 func main() {
 	// (x0 ∨ x1) ∧ (¬x0 ∨ x1) ∧ (¬x1 ∨ x0) → x0 = x1 = 真 で充足可能
 	var imp [][2]int
 	imp = addClause(imp, 0, 2)
 	imp = addClause(imp, 1, 2)
 	imp = addClause(imp, 3, 0)
-	fmt.Println(sat2Solvable(imp, 2))
+	fmt.Println(yesNo(sat2Solvable(imp, 2)))
 	// さらに (¬x0 ∨ ¬x1) を足すと充足不能
 	imp = addClause(imp, 1, 3)
-	fmt.Println(sat2Solvable(imp, 2))
+	fmt.Println(yesNo(sat2Solvable(imp, 2)))
 }

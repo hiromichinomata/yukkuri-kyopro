@@ -64,9 +64,12 @@ go run ./solutions/go/00/aplusb/ < solutions/python/00/aplusb/input.txt
 本文のテンプレートは、小さいランダム入力で **愚直解（全探索）と比べるテスト** を付けています。`tests/test_docs_code.py` は、本文（`docs/*.md`）に載っている Python のコードブロックそのものも同じテストにかけます。手元で次を実行してください。
 
 ```bash
-python3 -m pytest          # Python（tests/ と solutions/python/）
-go test ./solutions/go/... # Go（各ディレクトリの main_test.go）
+python3 -m pytest                  # Python（tests/ と solutions/python/）。Python と Go の出力比較も含む
+python3 -m pytest -m "not parity"  # 出力比較（Go のビルドで 1 分ほどかかる）を除いて手早く
+go test ./solutions/go/...         # Go（各ディレクトリの main_test.go）
 ```
+
+`tests/test_py_go_parity.py` は、同じディレクトリの Python 版と Go 版が同じ入力（`input.txt`、なければ空）に同じ出力を返すかを確かめます。出力は AtCoder と同じく、列は空白区切り・真偽は `Yes` / `No` にそろえています。
 
 テンプレートを書き換えたら、両方が通ることを確認してから本文に反映してください。
 

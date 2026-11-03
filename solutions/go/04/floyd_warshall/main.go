@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	const INF = 1 << 60
@@ -22,5 +25,7 @@ func main() {
 			}
 		}
 	}
-	fmt.Println(dist)
+	for _, row := range dist {
+		fmt.Println(strings.Trim(fmt.Sprint(row), "[]"))
+	}
 }

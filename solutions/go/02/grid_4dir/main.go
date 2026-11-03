@@ -19,5 +19,7 @@ func main() {
 			ok = append(ok, [2]int{ni, nj})
 		}
 	}
-	fmt.Println(ok)
+	for _, p := range ok {
+		fmt.Println(p[0], p[1])
+	}
 }

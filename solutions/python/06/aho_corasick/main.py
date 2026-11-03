@@ -51,7 +51,8 @@ def main() -> None:
     for w in ["he", "she", "his", "hers"]:
         ac.add(w)
     ac.build()
-    print(ac.search("ushers"))
+    for end, word in ac.search("ushers"):
+        print(end, word)
 
 
 if __name__ == "__main__":

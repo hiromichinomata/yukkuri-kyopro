@@ -9,7 +9,7 @@ def prob_reach(n: int, max_face: int = 6) -> float:
 
 
 def main() -> None:
-    print(prob_reach(6, 6))
+    print(f"{prob_reach(6, 6):.10f}")  # 小数は桁数を決めて出力
 
 
 if __name__ == "__main__":

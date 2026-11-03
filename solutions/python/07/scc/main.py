@@ -43,7 +43,8 @@ def main() -> None:
     for u, v in edges:
         g[u].append(v)
     comp, k = scc(g, n)
-    print(k, comp)
+    print(k)
+    print(*comp)
 
 
 if __name__ == "__main__":
