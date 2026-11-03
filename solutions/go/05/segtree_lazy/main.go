@@ -18,6 +18,9 @@ func NewLazySeg(data []int) *LazySeg {
 	for i, v := range data {
 		seg[size+i] = int64(v)
 	}
+	for i := size - 1; i > 0; i-- { // 内部ノードも初期値から作る
+		seg[i] = seg[2*i] + seg[2*i+1]
+	}
 	return &LazySeg{len(data), size, seg, lazy}
 }
 
@@ -57,8 +60,6 @@ func (t *LazySeg) rangeAdd(ql, qr int, x int64, i, l, r int) {
 	m := (l + r) / 2
 	t.rangeAdd(ql, qr, x, 2*i, l, m)
 	t.rangeAdd(ql, qr, x, 2*i+1, m, r)
-	t.push(2*i, l, m)
-	t.push(2*i+1, m, r)
 	t.pull(i)
 }
 
@@ -79,8 +80,8 @@ func (t *LazySeg) rangeSum(ql, qr, i, l, r int) int64 {
 }
 
 func main() {
-	st := NewLazySeg(make([]int, 8))
+	st := NewLazySeg([]int{1, 2, 3, 4, 5, 6, 7, 8})
 	st.RangeAdd(1, 5, 10)
 	st.RangeAdd(3, 7, 5)
-	fmt.Println(st.RangeSum(0, 8))
+	fmt.Println(st.RangeSum(0, 8), st.RangeSum(2, 4))
 }

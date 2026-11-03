@@ -10,7 +10,7 @@ type item struct{ d, v int }
 type pq []item
 
 func (h pq) Len() int            { return len(h) }
-func (h pq) Less(i, j int) bool { return h[i].d < h[j].d }
+func (h pq) Less(i, j int) bool  { return h[i].d < h[j].d }
 func (h pq) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
 func (h *pq) Push(x interface{}) { *h = append(*h, x.(item)) }
 func (h *pq) Pop() interface{} {

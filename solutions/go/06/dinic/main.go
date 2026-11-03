@@ -9,8 +9,8 @@ type edge struct {
 }
 
 type Dinic struct {
-	n   int
-	g   [][]edge
+	n int
+	g [][]edge
 }
 
 func NewDinic(n int) *Dinic {

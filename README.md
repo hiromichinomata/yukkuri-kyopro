@@ -59,6 +59,17 @@ go run ./solutions/go/00/aplusb/ < solutions/python/00/aplusb/input.txt
 
 入出力は AtCoder 形式（標準入力 → 標準出力）を想定しています。
 
+### テスト
+
+本文のテンプレートは、小さいランダム入力で **愚直解（全探索）と比べるテスト** を付けています。`tests/test_docs_code.py` は、本文（`docs/*.md`）に載っている Python のコードブロックそのものも同じテストにかけます。手元で次を実行してください。
+
+```bash
+python3 -m pytest          # Python（tests/ と solutions/python/）
+go test ./solutions/go/... # Go（各ディレクトリの main_test.go）
+```
+
+テンプレートを書き換えたら、両方が通ることを確認してから本文に反映してください。
+
 ## 執筆（Cursor Agent）
 
 章の執筆・`solutions/` 同期はプロジェクトスキル **yukkuri-kyopro-chapter**（`.cursor/skills/yukkuri-kyopro-chapter/`）を使う。依頼例: `@yukkuri-kyopro-chapter docs/01.md を執筆してください`。

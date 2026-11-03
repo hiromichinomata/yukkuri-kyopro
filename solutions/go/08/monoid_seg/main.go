@@ -25,6 +25,15 @@ func newMonoidSeg(data []int, op func(int, int) int, e int) *monoidSeg {
 	return s
 }
 
+func (s *monoidSeg) update(i, x int) {
+	i += s.size
+	s.dat[i] = x
+	for i > 1 {
+		i >>= 1
+		s.dat[i] = s.op(s.dat[i*2], s.dat[i*2+1])
+	}
+}
+
 func (s *monoidSeg) query(l, r int) int {
 	l += s.size
 	r += s.size
@@ -51,8 +60,10 @@ func main() {
 			return a
 		}
 		return b
-	}, -1_000_000_000)
+	}, -1<<60)
 	sum := newMonoidSeg(data, func(a, b int) int { return a + b }, 0)
 	fmt.Println(mx.query(1, 4))
 	fmt.Println(sum.query(0, 5))
+	mx.update(2, 10)
+	fmt.Println(mx.query(0, 5))
 }
