@@ -190,3 +190,126 @@ def test_abc156_d():
             b = R.randint(a + 1, n)
             exp = sum(comb(n, k) for k in range(1, n + 1) if k not in (a, b)) % (10**9 + 7)
             assert run("03/abc156_d", f"{n} {a} {b}\n").split() == [str(exp)]
+
+
+# ---------- Part 4 の推奨問題 ----------
+def test_abc035_c():
+    for _ in range(100):
+        n = R.randint(1, 10)
+        ops = [(lambda l: (l, R.randint(l, n)))(R.randint(1, n)) for _ in range(R.randint(1, 8))]
+        s = [0] * n
+        for l, r in ops:
+            for i in range(l - 1, r):
+                s[i] ^= 1
+        data = f"{n} {len(ops)}\n" + "".join(f"{l} {r}\n" for l, r in ops)
+        assert run("04/abc035_c", data).split() == ["".join(map(str, s))]
+
+
+def test_abc147_d():
+    for _ in range(100):
+        a = [R.randint(0, 2**60 - 1) for _ in range(R.randint(2, 8))]
+        exp = sum(x ^ y for x, y in itertools.combinations(a, 2)) % (10**9 + 7)
+        assert run("04/abc147_d", f"{len(a)}\n{' '.join(map(str, a))}\n").split() == [str(exp)]
+
+
+def test_abc154_e():
+    for n in list(range(1, 300)) + [R.randint(1, 10**5) for _ in range(20)]:
+        for k in (1, 2, 3):
+            exp = sum(1 for x in range(1, n + 1) if sum(c != "0" for c in str(x)) == k)
+            assert run("04/abc154_e", f"{n}\n{k}\n").split() == [str(exp)]
+
+
+def test_abc180_e():
+    for _ in range(40):
+        n = R.randint(2, 6)
+        p = list({(R.randint(-5, 5), R.randint(-5, 5), R.randint(-5, 5)) for _ in range(n)})
+        n = len(p)
+        if n < 2:
+            continue
+        c = lambda a, b: abs(b[0] - a[0]) + abs(b[1] - a[1]) + max(0, b[2] - a[2])
+        exp = min(
+            sum(c(p[o[i]], p[o[i + 1]]) for i in range(n))
+            for rest in itertools.permutations(range(1, n))
+            for o in [(0,) + rest + (0,)]
+        )
+        data = f"{n}\n" + "".join(f"{x} {y} {z}\n" for x, y, z in p)
+        assert run("04/abc180_e", data).split() == [str(exp)]
+
+
+def test_abc184_e():
+    from collections import deque as dq
+
+    for _ in range(100):
+        h, w = R.randint(1, 5), R.randint(2, 5)
+        cells = [R.choice(".#ab") for _ in range(h * w)]
+        s, g = R.sample(range(h * w), 2)
+        cells[s], cells[g] = "S", "G"
+        # 愚直: テレポートも普通の辺として張った BFS
+        dist = [-1] * (h * w)
+        dist[s] = 0
+        q = dq([s])
+        while q:
+            v = q.popleft()
+            i, j = divmod(v, w)
+            nb = [(i + di) * w + j + dj for di, dj in ((1, 0), (-1, 0), (0, 1), (0, -1)) if 0 <= i + di < h and 0 <= j + dj < w]
+            if cells[v] in "ab":
+                nb += [u for u in range(h * w) if cells[u] == cells[v]]
+            for u in nb:
+                if dist[u] == -1 and cells[u] != "#":
+                    dist[u] = dist[v] + 1
+                    q.append(u)
+        data = f"{h} {w}\n" + "\n".join("".join(cells[i * w : (i + 1) * w]) for i in range(h)) + "\n"
+        assert run("04/abc184_e", data).split() == [str(dist[g])]
+
+
+def test_abc187_e():
+    for _ in range(100):
+        n = R.randint(2, 8)
+        edges = [(i + 1, R.randint(1, i)) for i in range(1, n)]
+        R.shuffle(edges)
+        edges = [(a, b) if R.random() < 0.5 else (b, a) for a, b in edges]
+        g = [[] for _ in range(n + 1)]
+        for a, b in edges:
+            g[a].append(b)
+            g[b].append(a)
+        qs = [(R.randint(1, 2), R.randint(1, n - 1), R.randint(1, 9)) for _ in range(R.randint(1, 6))]
+        c = [0] * (n + 1)
+        for t, e, x in qs:
+            a, b = edges[e - 1]
+            if t == 2:
+                a, b = b, a
+            seen, stack = {a, b}, [a]
+            while stack:
+                v = stack.pop()
+                c[v] += x
+                for to in g[v]:
+                    if to not in seen:
+                        seen.add(to)
+                        stack.append(to)
+        data = f"{n}\n" + "".join(f"{a} {b}\n" for a, b in edges) + f"{len(qs)}\n" + "".join(f"{t} {e} {x}\n" for t, e, x in qs)
+        assert run("04/abc187_e", data).split() == list(map(str, c[1:]))
+
+
+def test_abc199_d():
+    for _ in range(100):
+        n = R.randint(1, 7)
+        es = sorted({tuple(sorted(R.sample(range(1, n + 1), 2))) for _ in range(R.randint(0, 10))} if n >= 2 else set())
+        exp = sum(all(col[a - 1] != col[b - 1] for a, b in es) for col in itertools.product(range(3), repeat=n))
+        data = f"{n} {len(es)}\n" + "".join(f"{a} {b}\n" for a, b in es)
+        assert run("04/abc199_d", data).split() == [str(exp)]
+
+
+def test_arc118_a():
+    for t in range(1, 51):
+        prices = {(100 + t) * a // 100 for a in range(1, 2000)}
+        missing = [v for v in range(1, (100 + t) * 1999 // 100) if v not in prices]
+        for n in (1, 2, t, t + 1, 3 * t + 2):
+            assert run("04/arc118_a", f"{t} {n}\n").split() == [str(missing[n - 1])]
+
+
+def test_dp_s():
+    for _ in range(100):
+        k = R.randint(1, 3000)
+        d = R.randint(1, 30)
+        exp = sum(1 for x in range(1, k + 1) if sum(map(int, str(x))) % d == 0) % (10**9 + 7)
+        assert run("04/dp_s", f"{k}\n{d}\n").split() == [str(exp)]

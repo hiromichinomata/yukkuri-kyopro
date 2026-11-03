@@ -4,7 +4,17 @@
 
 | ディレクトリ | 内容 | 本文 |
 |--------------|------|------|
+| [abc035_c/](abc035_c/) | abc035_c（1 次元いもすの復習） | [4.2](../../../docs/04.md#42-二次元累積和いもす法) |
+| [abc147_d/](abc147_d/) | abc147_d（ビットごとの寄与） | [4.9](../../../docs/04.md#49-期待値の線形性主客転倒) |
+| [abc154_e/](abc154_e/) | abc154_e（桁 DP） | [4.4](../../../docs/04.md#44-桁-dp) |
+| [abc180_e/](abc180_e/) | abc180_e（bitmask DP） | [4.10](../../../docs/04.md#410-水色まとめハンズオン) |
+| [abc184_e/](abc184_e/) | abc184_e（BFS（テレポートは文字ごとに 1 回だけ使う）） | [4.1](../../../docs/04.md#41-最短経路) |
+| [abc186_d/](abc186_d/) | abc186_d（ソート + 主客転倒） | [4.9](../../../docs/04.md#49-期待値の線形性主客転倒) |
+| [abc187_e/](abc187_e/) | abc187_e（木の上の累積和） | [4.10](../../../docs/04.md#410-水色まとめハンズオン) |
+| [abc194_d/](abc194_d/) | abc194_d（期待値） | [4.9](../../../docs/04.md#49-期待値の線形性主客転倒) |
+| [abc199_d/](abc199_d/) | abc199_d（3 色塗りの数え上げ（DFS で全探索）） | [4.8](../../../docs/04.md#48-二分グラフ判定) |
 | [arc115_a/](arc115_a/) | arc115_a（1 の個数の偶奇で分類（ARC A）） | [4.10](../../../docs/04.md#410-水色まとめハンズオン) |
+| [arc118_a/](arc118_a/) | arc118_a（周期性・数式（ARC A）） | [4.10](../../../docs/04.md#410-水色まとめハンズオン) |
 | [arc120_a/](arc120_a/) | arc120_a（累積和・累積 max（ARC A）） | [4.10](../../../docs/04.md#410-水色まとめハンズオン) |
 | [bfs01/](bfs01/) | 0-1 BFS（deque） | [4.1](../../../docs/04.md#41-最短経路) |
 | [bipartite/](bipartite/) | 計算量 | [4.8](../../../docs/04.md#48-二分グラフ判定) |
@@ -12,6 +22,7 @@
 | [digit_dp/](digit_dp/) | 桁和が D の倍数になる数を数える | [4.4](../../../docs/04.md#44-桁-dp) |
 | [dp_bitmask/](dp_bitmask/) | bitmask DP（小さな N） | [4.3](../../../docs/04.md#43-dp-の応用) |
 | [dp_interval/](dp_interval/) | 区間 DP（例: 石の合体） | [4.3](../../../docs/04.md#43-dp-の応用) |
+| [dp_s/](dp_s/) | 桁和が D の倍数になる数を数える | [4.4](../../../docs/04.md#44-桁-dp) |
 | [dp_tree/](dp_tree/) | 木 DP（部分木の値） | [4.3](../../../docs/04.md#43-dp-の応用) |
 | [fenwick/](fenwick/) | Fenwick | [4.5](../../../docs/04.md#45-セグメントツリーfenwick入門) |
 | [floyd_warshall/](floyd_warshall/) | ワーシャル（全点対） | [4.1](../../../docs/04.md#41-最短経路) |
@@ -22,5 +33,5 @@
 | [two_pointers/](two_pointers/) | 問題文のキーワード | [4.6](../../../docs/04.md#46-スライディングウィンドウ尺取り) |
 
 ```bash
-python3 solutions/python/04/arc115_a/main.py < solutions/python/04/arc115_a/input.txt
+python3 solutions/python/04/abc035_c/main.py < solutions/python/04/abc035_c/input.txt
 ```
