@@ -1,0 +1,24 @@
+# Part 2（[docs/02.md](../../../docs/02.md)）— Python
+
+茶色の Part の解答・テンプレートです。「本文」列は、そのコードを解説している節です。
+
+| ディレクトリ | 内容 | 本文 |
+|--------------|------|------|
+| [abc136_c/](abc136_c/) | abc136_c（左から貪欲） | [2.3](../../../docs/02.md#23-貪欲法入門) |
+| [abc142_b/](abc142_b/) | abc142_b（条件を満たす個数を数える） | [2.9](../../../docs/02.md#29-茶色まとめハンズオン) |
+| [abc146_b/](abc146_b/) | abc146_b（文字シフト） | [2.7](../../../docs/02.md#27-文字列処理) |
+| [abc152_b/](abc152_b/) | abc152_b（辞書順の比較） | [2.7](../../../docs/02.md#27-文字列処理) |
+| [arc083_a/](arc083_a/) | arc083_a（水と砂糖の量を全列挙（旧 ARC、ABC C 相当）） | [2.9](../../../docs/02.md#29-茶色まとめハンズオン) |
+| [bit_search/](bit_search/) | 和が K になる選び方を数える（bit 全探索） | [2.2](../../../docs/02.md#22-bit-全探索順列全探索) |
+| [compress_coords/](compress_coords/) | 計算量 | [2.8](../../../docs/02.md#28-座標圧縮入門) |
+| [counter_freq/](counter_freq/) | 頻度カウント | [2.6](../../../docs/02.md#26-集合辞書カウンタ) |
+| [diff_array/](diff_array/) | 差分配列（区間に一括 +1） | [2.5](../../../docs/02.md#25-累積和差分1-次元) |
+| [greedy_intervals/](greedy_intervals/) | 区間スケジューリング（終了時刻が早い順） | [2.3](../../../docs/02.md#23-貪欲法入門) |
+| [grid_4dir/](grid_4dir/) | 4 方向への移動 | [2.4](../../../docs/02.md#24-二次元グリッド) |
+| [permutation_search/](permutation_search/) | 全都市を回る最短距離（順列全探索） | [2.2](../../../docs/02.md#22-bit-全探索順列全探索) |
+| [prefix_sum/](prefix_sum/) | 累積和 | [2.5](../../../docs/02.md#25-累積和差分1-次元) |
+| [sort_pairs/](sort_pairs/) | 昇順・降順 | [2.1](../../../docs/02.md#21-ソートとカスタム比較) |
+
+```bash
+python3 solutions/python/02/abc136_c/main.py < solutions/python/02/abc136_c/input.txt
+```
