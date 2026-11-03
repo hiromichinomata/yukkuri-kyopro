@@ -13,7 +13,8 @@ R = random.Random(20261104)
 def run(rel: str, data: str) -> str:
     mod = load(rel)
     old_in, old_out = sys.stdin, sys.stdout
-    sys.stdin, sys.stdout = io.StringIO(data), io.StringIO()
+    # sys.stdin.buffer から読む解答もあるので、バイト列の上に文字列のラッパーをかぶせる
+    sys.stdin, sys.stdout = io.TextIOWrapper(io.BytesIO(data.encode())), io.StringIO()
     try:
         mod.main()
         return sys.stdout.getvalue()
@@ -313,3 +314,63 @@ def test_dp_s():
         d = R.randint(1, 30)
         exp = sum(1 for x in range(1, k + 1) if sum(map(int, str(x))) % d == 0) % (10**9 + 7)
         assert run("04/dp_s", f"{k}\n{d}\n").split() == [str(exp)]
+
+
+# ---------- Part 5 の推奨問題 ----------
+def test_abc214_f():
+    for _ in range(200):
+        s = "".join(R.choice("abc") for _ in range(R.randint(1, 10)))
+        n = len(s)
+        ts = {"".join(s[i] for i in range(n) if mask >> i & 1) for mask in range(1, 1 << n) if not mask & (mask >> 1)}
+        assert run("05/abc214_f", s + "\n").split() == [str(len(ts) % (10**9 + 7))]
+
+
+def test_abc256_d():
+    for _ in range(200):
+        iv = [(lambda l: (l, R.randint(l + 1, 12)))(R.randint(1, 11)) for _ in range(R.randint(1, 6))]
+        covered = [any(l <= x < r for l, r in iv) for x in range(14)]
+        exp = []
+        x = 0
+        while x < 14:
+            if covered[x]:
+                y = x
+                while y < 14 and covered[y]:
+                    y += 1
+                exp += [str(x), str(y)]
+                x = y
+            else:
+                x += 1
+        data = f"{len(iv)}\n" + "".join(f"{l} {r}\n" for l, r in iv)
+        assert run("05/abc256_d", data).split() == exp
+
+
+def test_abc240_f():
+    for _ in range(200):
+        n = R.randint(1, 5)
+        runs = [(R.randint(-4, 4), R.randint(1, 6)) for _ in range(n)]
+        c = [x for x, y in runs for _ in range(y)]
+        b = a = 0
+        best = None
+        for v in c:
+            b += v
+            a += b
+            best = a if best is None else max(best, a)
+        data = f"1\n{n} {len(c)}\n" + "".join(f"{x} {y}\n" for x, y in runs)
+        assert run("05/abc240_f", data).split() == [str(best)]
+
+
+def test_abc229_d():
+    for _ in range(200):
+        s = "".join(R.choice("X.") for _ in range(R.randint(1, 12)))
+        k = R.randint(0, 5)
+        exp = max(r - l for l in range(len(s)) for r in range(l, len(s) + 1) if s[l:r].count(".") <= k)
+        assert run("05/abc229_d", f"{s}\n{k}\n").split() == [str(exp)]
+
+
+def test_arc151_b():
+    for _ in range(100):
+        n, m = R.randint(1, 5), R.randint(1, 4)
+        p = list(range(1, n + 1))
+        R.shuffle(p)
+        exp = sum(1 for a in itertools.product(range(1, m + 1), repeat=n) if list(a) < [a[x - 1] for x in p])
+        assert run("05/arc151_b", f"{n} {m}\n{' '.join(map(str, p))}\n").split() == [str(exp % 998244353)]
