@@ -30,7 +30,7 @@ Task Progress:
 - [ ] 4b. リライト時: コードブロック数が減っていないか確認
 - [ ] 5. solutions/python/NN/ と solutions/go/NN/
 - [ ] 6. 本文から solutions へのリンク
-- [ ] 7. 実行・テスト（動くものだけ）
+- [ ] 7. 正しさの確認（下の「正しさの確認」をすべて）
 - [ ] 8. 問題索引 docs/12.md を更新（推奨問題を書いた場合）
 ```
 
@@ -73,6 +73,7 @@ Task Progress:
 
 - 🖐️ 節: 手順番号・ローカル実行コマンド・期待出力
 - 🎯 節: AtCoder 問題を **ID 付き**で列挙（例: `abc200_a`）。問題文の全文転載はしない
+- 表の「想定スキル」は **AtCoder の問題文を実際に読んで** 書く。記憶や問題番号からの推測で書かない（過去に半数近くが実際の問題と食い違っていた）
 - 目次の「コンテスト目安」（ABC / ARC / AGC）を表で触れる
 
 ### Step 4: コード（本文は多め）
@@ -113,9 +114,10 @@ Task Progress:
 | | Python | Go |
 |---|--------|-----|
 | 入出力 | `sys.stdin` / `input = sys.stdin.readline` | `bufio.NewReader(os.Stdin)` + `Writer` + `Flush` |
-| 再帰 DFS | `sys.setrecursionlimit(10**7)` を必要なら明記 | 深い再帰は注意、スタック/ループ代替に言及 |
+| 再帰 DFS | `sys.setrecursionlimit(10**7)` を必要なら明記。深い再帰は遅い（特に PyPy） | スタックは自動で伸びる（上限 1GB）ので、深さ 10^6 程度なら再帰のままでよい |
 | 定数 | `INF = 10**18`, `MOD = 998244353` | `const inf int64 = 1 << 60` など |
 | 提出 | デバッグ `print` は stderr 例のみ、提出用に残さない旨を書く | 同左 |
+| 出力 | AtCoder 形式: 列は `print(*xs)`、真偽は `Yes` / `No`、小数は桁数固定 | 列は空白区切り（`strings.Trim(fmt.Sprint(xs), "[]")` など）。Python 版と同じ出力にする |
 
 ### Step 5: `solutions/` の同期
 
@@ -139,8 +141,10 @@ solutions/go/{NN}/{topic_or_problem_id}/main.go
 テンプレ・ハンズオンの節に追記:
 
 ```markdown
-→ [solutions/python/NN/.../main.py](../../../solutions/python/NN/.../main.py)
+→ [solutions/python/NN/<dir>/](../solutions/python/NN/<dir>/) / [solutions/go/NN/<dir>/](../solutions/go/NN/<dir>/)
 ```
+
+（`docs/NN.md` からの相対パスなので `../solutions/`。ブログに載せるときは `scripts/export_blog.py` で絶対 URL に変換する）
 
 実行例:
 
@@ -149,13 +153,26 @@ python3 solutions/python/NN/.../main.py < solutions/python/NN/.../input.txt
 go run ./solutions/go/NN/.../ < solutions/python/NN/.../input.txt
 ```
 
-### Step 7: 検証
+### Step 7: 正しさの確認（必須）
+
+過去の見直しで、問題 ID 名の解答の多くが **別の問題を解いていた**、テンプレートに **愚直解と比べれば分かるバグ** があった、本文のコードが **解答と食い違っていた**、という事故が見つかっている。次をすべて満たすまで完了にしない。
+
+| 対象 | 確認すること | どこで |
+|------|--------------|--------|
+| 問題 ID 名の解答（`abc200_a/` など） | AtCoder の問題文を読み、**公式サンプルをすべて** Python・Go で通す | 手元で実行（サンプルはコミットしない。`input.txt` は入力例 1 のみ） |
+| テンプレート（データ構造・アルゴリズム） | 小さいランダム入力で **愚直解（全探索）と比較** | Python: `tests/test_templates.py`、Go: 同ディレクトリの `main_test.go` |
+| 本文で解説した ARC / AGC の解答 | 愚直解（構築問題は出力チェッカー）と比較 | `tests/test_problems.py` |
+| 本文のコードブロック | 解答と同じコードであること。本文の Python ブロックは自動でテストにかかる | `tests/test_docs_code.py`（本文の節から `solutions/python/NN/<dir>/` へリンクしておく） |
+| Python 版と Go 版 | 同じ入力（`input.txt`、なければ空）に **同じ出力** | `tests/test_py_go_parity.py` |
+| リンク | 相対リンク・アンカー（`#見出し`）が切れていない | `tests/test_links.py` |
+
+本文のコードは手で写さず、**テスト済みの `solutions/` のファイルから貼る**（関数・クラス部分を切り出す）。
 
 ```bash
-python3 solutions/python/NN/<dir>/main.py < solutions/python/NN/<dir>/input.txt
-go run ./solutions/go/NN/<dir>/
-go test ./solutions/go/NN/<dir>/   # テストを書いた場合
-pytest solutions/python/NN/<dir>/  # test_*.py がある場合
+python3 -m pytest                  # すべて（Python と Go の出力比較で 1 分ほど）
+python3 -m pytest -m "not parity"  # 出力比較を除いて手早く
+go vet ./... && go test ./solutions/go/...
+gofmt -l solutions/go              # 何も出なければ OK
 ```
 
 ### Step 8: 問題索引
@@ -170,13 +187,16 @@ pytest solutions/python/NN/<dir>/  # test_*.py がある場合
 - `oj` / `acc` で落とした **非公開テストデータ**のコミット
 - `solutions/` だけ更新して **docs のリンク・説明を放置**
 - 霊夢・魔理沙以外のキャラをメイン解説にする（本書は二人のみ）
+- 問題 ID 名のディレクトリ（`abc088_b/` など）に、**その問題ではない練習問題** の解答を置く（練習用は `simulate_left_only/` のようなトピック名にする）
+- 「〜相当」と書いて、実在の問題 ID に架空の問題内容を結び付ける
+- テストを通していないコードを本文に載せる
 - 章番号と Part の取り違え（`docs/NN.md` の NN = Part 番号、`00.md` = Part 0）
 - **解説を増やす名目で Python/Go 実装を削る・コメント化する**（両立が原則）
 
 ## 付録（09〜15）
 
 - 対談は省略可。リファレンス・表・コード一覧中心
-- [docs/11.md](../../../docs/11.md) スニペットは [solutions/python/00/](../../../solutions/python/00/) 等を再利用・集約してよい
+- [docs/11.md](../../../docs/11.md) スニペットは `solutions/` のテスト済みコードをそのまま集約する（独自の書き換え版を置かない）。Python / Go を並記し、各節に `solutions/python/NN/<dir>/` へのリンクを置く（`tests/test_docs_code.py` の対象になる）
 
 ## 参照
 
