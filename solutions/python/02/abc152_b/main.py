@@ -2,18 +2,10 @@ import sys
 
 
 def main() -> None:
-    input = sys.stdin.readline
-    n = int(input())
-    s = input().strip()
-    x = int(input())
-    ans = []
-    for ch in s:
-        if "A" <= ch <= "Z":
-            c = (ord(ch) - ord("A") + x) % 26
-            ans.append(chr(ord("A") + c))
-        else:
-            ans.append(ch)
-    print("".join(ans))
+    a, b = map(int, sys.stdin.readline().split())
+    s = str(a) * b  # 数字 a を b 個
+    t = str(b) * a  # 数字 b を a 個
+    print(min(s, t))  # 文字列の min は辞書順で比べる
 
 
 if __name__ == "__main__":

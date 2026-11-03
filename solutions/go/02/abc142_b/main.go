@@ -4,27 +4,22 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"sort"
 )
 
 func main() {
 	in := bufio.NewReader(os.Stdin)
-	var n int
-	fmt.Fscan(in, &n)
-	a := make([]int, n)
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+
+	var n, k int
+	fmt.Fscan(in, &n, &k)
+	cnt := 0
 	for i := 0; i < n; i++ {
-		fmt.Fscan(in, &a[i])
-	}
-	sort.Ints(a)
-	const k = 2
-	total := 0
-	for i, price := range a {
-		remaining := n - i
-		if remaining%k == 0 {
-			total += price / 2
-		} else {
-			total += price
+		var h int
+		fmt.Fscan(in, &h)
+		if h >= k {
+			cnt++
 		}
 	}
-	fmt.Println(total)
+	fmt.Fprintln(out, cnt)
 }

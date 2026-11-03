@@ -8,16 +8,20 @@ import (
 
 func main() {
 	in := bufio.NewReader(os.Stdin)
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+
 	var n int
 	fmt.Fscan(in, &n)
 	xs := make([]int, n)
-	for i := 0; i < n; i++ {
+	for i := range xs {
 		fmt.Fscan(in, &xs[i])
 	}
-	t := 0
-	for len(xs) > 0 {
-		t += xs[0]
-		xs = xs[1:]
+	score := [2]int{} // score[0]: 先手, score[1]: 後手
+	turn := 0
+	for i := 0; i < n; i++ { // 左端から 1 枚ずつ取る
+		score[turn] += xs[i]
+		turn ^= 1 // 手番の交代は 1 か所で
 	}
-	fmt.Println(t)
+	fmt.Fprintln(out, score[0]-score[1])
 }

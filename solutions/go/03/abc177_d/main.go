@@ -11,12 +11,12 @@ type DSU struct {
 }
 
 func NewDSU(n int) *DSU {
-	p, s := make([]int, n), make([]int, n)
-	for i := range p {
-		p[i] = i
-		s[i] = 1
+	d := &DSU{make([]int, n), make([]int, n)}
+	for i := range d.parent {
+		d.parent[i] = i
+		d.size[i] = 1
 	}
-	return &DSU{p, s}
+	return d
 }
 
 func (d *DSU) Find(x int) int {
@@ -39,31 +39,25 @@ func (d *DSU) Unite(a, b int) {
 	d.size[a] += d.size[b]
 }
 
-func (d *DSU) Same(a, b int) bool {
-	return d.Find(a) == d.Find(b)
-}
-
 func main() {
 	in := bufio.NewReader(os.Stdin)
 	out := bufio.NewWriter(os.Stdout)
 	defer out.Flush()
 
-	var n, q int
-	fmt.Fscan(in, &n, &q)
+	var n, m int
+	fmt.Fscan(in, &n, &m)
 	d := NewDSU(n)
-	for ; q > 0; q-- {
-		var t, u, v int
-		fmt.Fscan(in, &t, &u, &v)
-		u--
-		v--
-		if t == 1 {
-			d.Unite(u, v)
-		} else {
-			if d.Same(u, v) {
-				fmt.Fprintln(out, "Yes")
-			} else {
-				fmt.Fprintln(out, "No")
-			}
+	for i := 0; i < m; i++ {
+		var a, b int
+		fmt.Fscan(in, &a, &b)
+		d.Unite(a-1, b-1)
+	}
+	// 一番大きい友達グループの人数が答え
+	ans := 0
+	for v := 0; v < n; v++ {
+		if s := d.size[d.Find(v)]; s > ans {
+			ans = s
 		}
 	}
+	fmt.Fprintln(out, ans)
 }

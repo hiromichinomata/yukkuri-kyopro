@@ -21,24 +21,17 @@ class DSU:
         self.parent[b] = a
         self.size[a] += self.size[b]
 
-    def same(self, a: int, b: int) -> bool:
-        return self.find(a) == self.find(b)
-
 
 def main() -> None:
     input = sys.stdin.readline
-    n, q = map(int, input().split())
+    n, m = map(int, input().split())
     dsu = DSU(n)
-    out = []
-    for _ in range(q):
-        t, u, v = map(int, input().split())
-        u -= 1
-        v -= 1
-        if t == 1:
-            dsu.unite(u, v)
-        else:
-            out.append("Yes" if dsu.same(u, v) else "No")
-    print("\n".join(out))
+    for _ in range(m):
+        a, b = map(int, input().split())
+        dsu.unite(a - 1, b - 1)
+    # 友達グループの人は全員別のグループに分ける必要がある
+    # → 一番大きい友達グループの人数が答え
+    print(max(dsu.size[dsu.find(v)] for v in range(n)))
 
 
 if __name__ == "__main__":
