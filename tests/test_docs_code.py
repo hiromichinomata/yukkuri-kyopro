@@ -18,13 +18,17 @@ DOCS = conftest.ROOT / "docs"
 
 
 def doc_blocks(part: str, rel: str):
-    """見出しで区切った節のうち、solutions/python/<rel>/ へのリンクがある節の Python ブロック"""
-    text = (DOCS / f"{part}.md").read_text(encoding="utf-8")
-    sections = re.split(r"\n(?=#{2,4} )", text)
+    """solutions/python/<rel>/ へのリンクがある節の Python ブロック。
+
+    本文（docs/NN.md）は見出しごとに区切る（同じ Part に同名の関数が複数あるため）。
+    付録 C（11.md、スニペット集）はリンクが「##」の直下、コードが「### Python」の下にあるので「##」単位で区切る。
+    """
     out = []
-    for sec in sections:
-        if f"solutions/python/{rel}/" in sec:
-            out += re.findall(r"```python\n(.*?)```", sec, re.S)
+    for name, pattern in ((f"{part}.md", r"\n(?=#{2,4} )"), ("11.md", r"\n(?=## )")):
+        text = (DOCS / name).read_text(encoding="utf-8")
+        for sec in re.split(pattern, text):
+            if f"solutions/python/{rel}/" in sec:
+                out += re.findall(r"```python\n(.*?)```", sec, re.S)
     return out
 
 
