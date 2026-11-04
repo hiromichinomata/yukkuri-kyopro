@@ -33,9 +33,16 @@ func canMakeSum(xs []int, target int) bool {
 	return false
 }
 
+func yesNo(b bool) string {
+	if b {
+		return "Yes"
+	}
+	return "No"
+}
+
 func main() {
 	xs := []int{1, 2, 4, 8, 16}
 	for _, t := range []int{0, 7, 15, 31, 32} {
-		fmt.Println(t, canMakeSum(xs, t))
+		fmt.Println(t, yesNo(canMakeSum(xs, t)))
 	}
 }

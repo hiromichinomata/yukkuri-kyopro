@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	n := 5
@@ -15,5 +18,5 @@ func main() {
 	for i := 1; i <= n; i++ {
 		a[i] = a[i-1] + diff[i]
 	}
-	fmt.Println(a[1:])
+	fmt.Println(strings.Trim(fmt.Sprint(a[1:]), "[]"))
 }

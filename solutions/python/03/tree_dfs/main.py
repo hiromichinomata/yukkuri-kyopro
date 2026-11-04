@@ -15,7 +15,7 @@ def main() -> None:
     g = [[1, 2], [0, 3], [0], [1]]
     depth = [0] * 4
     dfs(0, -1, g, depth)
-    print(depth)
+    print(*depth)
 
 
 if __name__ == "__main__":

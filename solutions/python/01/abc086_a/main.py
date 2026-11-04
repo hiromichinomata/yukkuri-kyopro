@@ -3,8 +3,10 @@ import sys
 
 def main() -> None:
     a, b = map(int, sys.stdin.readline().split())
-    p = a * b
-    print("Yes" if 1 <= p <= 9 else "No")
+    if a * b % 2 == 0:  # 2 で割った余りが 0 なら偶数
+        print("Even")
+    else:
+        print("Odd")
 
 
 if __name__ == "__main__":

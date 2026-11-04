@@ -10,6 +10,8 @@ class LazySegTree:
         self.lazy = [0] * (2 * n)
         for i, v in enumerate(data):
             self.seg[n + i] = v
+        for i in range(n - 1, 0, -1):  # 内部ノードも初期値から作る
+            self.seg[i] = self.seg[2 * i] + self.seg[2 * i + 1]
 
     def _apply(self, i: int, l: int, r: int, x: int) -> None:
         self.seg[i] += x * (r - l)
@@ -39,8 +41,6 @@ class LazySegTree:
         m = (l + r) // 2
         self.range_add(ql, qr, x, 2 * i, l, m)
         self.range_add(ql, qr, x, 2 * i + 1, m, r)
-        self._push(2 * i, l, m)
-        self._push(2 * i + 1, m, r)
         self._pull(i)
 
     def range_sum(self, ql: int, qr: int, i: int = 1, l: int = 0, r: int | None = None) -> int:
@@ -56,10 +56,10 @@ class LazySegTree:
 
 
 def main() -> None:
-    st = LazySegTree([0] * 8)
+    st = LazySegTree([1, 2, 3, 4, 5, 6, 7, 8])
     st.range_add(1, 5, 10)
     st.range_add(3, 7, 5)
-    print(st.range_sum(0, 8))
+    print(st.range_sum(0, 8), st.range_sum(2, 4))
 
 
 if __name__ == "__main__":

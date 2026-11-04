@@ -1,22 +1,19 @@
 import sys
-from functools import lru_cache
 
 
 def main() -> None:
     input = sys.stdin.readline
     n = int(input())
-    a = list(map(int, input().split()))
-    total = sum(a)
-
-    @lru_cache(maxsize=None)
-    def advantage(l: int, r: int) -> int:
-        """区間 [l,r] で手番のプレイヤーが得する (自分の合計 - 相手の合計) の最大値。"""
-        if l == r:
-            return a[l]
-        return max(a[l] - advantage(l + 1, r), a[r] - advantage(l, r - 1))
-
-    # 先手（高橋）の合計 = (全体の和 + 先手有利度) / 2
-    print((total + advantage(0, n - 1)) // 2)
+    a = sorted(map(int, input().split()), reverse=True)  # 大きい順に並べる
+    diff = 0  # Alice の得点 - Bob の得点
+    turn = 0  # 0: Alice, 1: Bob
+    for x in a:
+        if turn == 0:
+            diff += x
+        else:
+            diff -= x
+        turn ^= 1
+    print(diff)
 
 
 if __name__ == "__main__":

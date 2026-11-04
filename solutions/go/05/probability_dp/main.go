@@ -16,5 +16,5 @@ func probReach(n, maxFace int) float64 {
 }
 
 func main() {
-	fmt.Printf("%.6f\n", probReach(6, 6))
+	fmt.Printf("%.10f\n", probReach(6, 6)) // 小数は桁数を決めて出力
 }

@@ -33,25 +33,37 @@ def scc(g, n):
         if not seen[v]:
             rdfs(v)
             cid += 1
-    return comp
+    return comp, cid
 
+
+# リテラルの番号: 2*i が「x_i が真」、2*i+1 が「x_i が偽」。l ^ 1 で否定になる
+def add_clause(implications, a, b):
+    # 節 (a ∨ b) は「¬a なら b」「¬b なら a」の 2 本の含意
+    implications.append((a ^ 1, b))
+    implications.append((b ^ 1, a))
 
 def sat2_solvable(implications, n_vars):
     n = 2 * n_vars
     g = [[] for _ in range(n)]
     for a, b in implications:
         g[a].append(b)
-    comp = scc(g, n)
+    comp, _ = scc(g, n)
     for i in range(n_vars):
-        if comp[2 * i] == comp[2 * i + 1]:
+        if comp[2 * i] == comp[2 * i + 1]:  # x と ¬x が同じ成分なら矛盾
             return False
     return True
 
 
 def main() -> None:
-    n_vars = 2
-    implications = [(1, 2), (3, 2)]
-    print(sat2_solvable(implications, n_vars))
+    # (x0 ∨ x1) ∧ (¬x0 ∨ x1) ∧ (¬x1 ∨ x0) → x0 = x1 = 真 で充足可能
+    imp = []
+    add_clause(imp, 0, 2)
+    add_clause(imp, 1, 2)
+    add_clause(imp, 3, 0)
+    print("Yes" if sat2_solvable(imp, 2) else "No")
+    # さらに (¬x0 ∨ ¬x1) を足すと充足不能
+    add_clause(imp, 1, 3)
+    print("Yes" if sat2_solvable(imp, 2) else "No")
 
 
 if __name__ == "__main__":

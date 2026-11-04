@@ -23,6 +23,10 @@ func analyzeConstraints(n, q, vmax int, graph bool) []string {
 }
 
 func main() {
-	fmt.Println(analyzeConstraints(18, 0, 1_000_000_000, false))
-	fmt.Println(analyzeConstraints(200000, 200000, 1_000_000_000, true))
+	for _, hint := range analyzeConstraints(18, 0, 1_000_000_000, false) {
+		fmt.Println(hint)
+	}
+	for _, hint := range analyzeConstraints(200000, 200000, 1_000_000_000, true) {
+		fmt.Println(hint)
+	}
 }

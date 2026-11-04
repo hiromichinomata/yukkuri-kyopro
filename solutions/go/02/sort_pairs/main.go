@@ -12,5 +12,7 @@ func main() {
 	sort.Slice(ps, func(i, j int) bool {
 		return ps[i].b < ps[j].b
 	})
-	fmt.Println(ps)
+	for _, p := range ps {
+		fmt.Println(p.a, p.b)
+	}
 }

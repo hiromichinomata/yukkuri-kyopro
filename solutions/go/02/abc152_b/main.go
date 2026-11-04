@@ -4,27 +4,22 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
+	"strings"
 )
-
-func shift(ch byte, x int) byte {
-	if ch < 'A' || ch > 'Z' {
-		return ch
-	}
-	c := int(ch-'A') + x
-	c %= 26
-	return byte('A' + c)
-}
 
 func main() {
 	in := bufio.NewReader(os.Stdin)
-	var n, x int
-	fmt.Fscan(in, &n)
-	var s string
-	fmt.Fscan(in, &s)
-	fmt.Fscan(in, &x)
-	out := make([]byte, n)
-	for i := 0; i < n; i++ {
-		out[i] = shift(s[i], x)
+	out := bufio.NewWriter(os.Stdout)
+	defer out.Flush()
+
+	var a, b int
+	fmt.Fscan(in, &a, &b)
+	s := strings.Repeat(strconv.Itoa(a), b) // 数字 a を b 個
+	t := strings.Repeat(strconv.Itoa(b), a) // 数字 b を a 個
+	if s < t {                              // string の < は辞書順
+		fmt.Fprintln(out, s)
+	} else {
+		fmt.Fprintln(out, t)
 	}
-	fmt.Println(string(out))
 }

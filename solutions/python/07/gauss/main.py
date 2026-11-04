@@ -34,7 +34,8 @@ def main() -> None:
         [2, 1, 5],
         [1, 1, 3],
     ]
-    print(gauss([row[:] for row in A]))
+    for row in gauss([row[:] for row in A]):
+        print(*row)
 
 
 if __name__ == "__main__":

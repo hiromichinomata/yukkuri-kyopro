@@ -6,17 +6,15 @@ import (
 	"os"
 )
 
+// AGC004 A - Divide a Cuboid
+// どれかの辺が偶数なら 0。全部奇数なら、残り 2 辺の積の最小値が答え。
 func main() {
 	in := bufio.NewReader(os.Stdin)
-	var n int
-	fmt.Fscan(in, &n)
-	a := make([]int, n)
-	for i := 0; i < n; i++ {
-		fmt.Fscan(in, &a[i])
+	var a, b, c int
+	fmt.Fscan(in, &a, &b, &c)
+	if a%2 == 0 || b%2 == 0 || c%2 == 0 {
+		fmt.Println(0)
+		return
 	}
-	ans := 0
-	for i := 1; i < n-1; i++ {
-		ans ^= a[i]
-	}
-	fmt.Println(ans)
+	fmt.Println(min(a*b, b*c, c*a))
 }

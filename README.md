@@ -20,16 +20,17 @@ AtCoder（ABC / ARC / AGC）を土台に、レーティング帯ごとに競技�
 1. [docs/00-toc.md](docs/00-toc.md) で全体像を把握する。
 2. 自分の AtCoder レーティングに近い Part（[docs/01.md](docs/01.md) 以降）から読む。前の Part は復習用でスキップしてよい。
 3. 各 Part 内は **解説 → ハンズオン → まとめ演習** の順を推奨。
-4. コードは本文ではなく [solutions/](solutions/) を参照し、Python と Go を見比べる。
+4. 解説付きの問題は、要約のあとの **💡 ヒント** で一度止まり、自分で考えてから続きを読む。
+5. 本文のコードは [solutions/](solutions/) の解答と同じもの。手元で動かすときは solutions/ のファイルを使い、Python と Go を見比べる。
+6. 推奨問題の表の「タグ」列は解き方の手がかりなので、解いてから（または詰まってから）見る。
 
 ## リポジトリ構成
 
 ```
 docs/           # 本文（00-toc.md = 目次、00.md〜 = 各 Part）
 solutions/
-  python/       # 章番号ごと（例: 02/ = docs/01.md に対応）
+  python/       # 章番号ごと（例: 01/ = docs/01.md に対応）
   go/
-scripts/        # ローカル検証用（任意）
 ```
 
 - **ファイル番号と Part**: `docs/NN.md` の **NN** が Part 番号と一致（例: `00.md` = Part 0、`01.md` = Part 1 灰色）。
@@ -42,10 +43,6 @@ scripts/        # ローカル検証用（任意）
 ### Python
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"     # テスト実行時のみ
-
 # 例: Part 0 の A+B を実行
 python3 solutions/python/00/aplusb/main.py < solutions/python/00/aplusb/input.txt
 ```
@@ -53,24 +50,11 @@ python3 solutions/python/00/aplusb/main.py < solutions/python/00/aplusb/input.tx
 ### Go
 
 ```bash
+# 入力ファイルは Python 側のものを共用
 go run ./solutions/go/00/aplusb/ < solutions/python/00/aplusb/input.txt
 ```
 
 入出力は AtCoder 形式（標準入力 → 標準出力）を想定しています。
-
-## 執筆（Cursor Agent）
-
-章の執筆・`solutions/` 同期はプロジェクトスキル **yukkuri-kyopro-chapter**（`.cursor/skills/yukkuri-kyopro-chapter/`）を使う。依頼例: `@yukkuri-kyopro-chapter docs/01.md を執筆してください`。
-
-## 開発メモ
-
-| 項目 | 場所 |
-|------|------|
-| 目次・章立て | [docs/00-toc.md](docs/00-toc.md) |
-| 問題と章の対応 | [docs/12.md](docs/12.md) |
-| スニペット | [docs/11.md](docs/11.md) |
-
-ローカルで AtCoder の問題を試すときは [AtCoder CLI](https://github.com/TatianaAtCoder/atcoder-cli) や [online-judge-tools](https://github.com/kmyk/online-judge-tools) を使い、生成されたテストデータや `contests/` ディレクトリは **コミットしない**（`.gitignore` 済み）。
 
 ## ライセンス
 

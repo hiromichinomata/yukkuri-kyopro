@@ -10,7 +10,7 @@ def suffix_array(s: str) -> list:
         for i in range(1, n):
             a = (rank[sa[i]], rank[sa[i] + k] if sa[i] + k < n else -1)
             b = (rank[sa[i - 1]], rank[sa[i - 1] + k] if sa[i - 1] + k < n else -1)
-            new_rank[sa[i]] = new_rank[sa[i - 1]] + (a < b)
+            new_rank[sa[i]] = new_rank[sa[i - 1]] + (a != b)  # ソート済みなので a != b なら a > b
         rank = new_rank
         if rank[sa[-1]] == n - 1:
             break
@@ -21,8 +21,9 @@ def suffix_array(s: str) -> list:
 def main() -> None:
     s = "banana"
     sa = suffix_array(s)
-    print(sa)
-    print([s[i:] for i in sa])
+    print(*sa)
+    for i in sa:
+        print(s[i:])
 
 
 if __name__ == "__main__":

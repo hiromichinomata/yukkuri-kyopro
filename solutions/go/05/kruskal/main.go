@@ -37,19 +37,23 @@ func (d *DSU) Unite(a, b int) bool {
 	return true
 }
 
-func main() {
-	edges := [][3]int{{0, 1, 1}, {1, 2, 2}, {0, 2, 4}, {2, 3, 1}}
+// kruskal は辺を重みの小さい順に見て、閉路を作らないものだけ採用する
+func kruskal(n int, edges [][3]int, dsu *DSU) int {
 	sort.Slice(edges, func(i, j int) bool { return edges[i][2] < edges[j][2] })
-	d := NewDSU(4)
 	total, used := 0, 0
 	for _, e := range edges {
-		if d.Unite(e[0], e[1]) {
+		if dsu.Unite(e[0], e[1]) {
 			total += e[2]
 			used++
-			if used == 3 {
+			if used == n-1 {
 				break
 			}
 		}
 	}
-	fmt.Println(total)
+	return total
+}
+
+func main() {
+	edges := [][3]int{{0, 1, 1}, {1, 2, 2}, {0, 2, 4}, {2, 3, 1}}
+	fmt.Println(kruskal(4, edges, NewDSU(4)))
 }

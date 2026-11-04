@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	n := 4
@@ -23,5 +26,5 @@ func main() {
 			}
 		}
 	}
-	fmt.Println(order)
+	fmt.Println(strings.Trim(fmt.Sprint(order), "[]"))
 }

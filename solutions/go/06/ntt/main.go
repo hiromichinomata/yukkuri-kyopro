@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 const mod = 998244353
 const g = 3
@@ -38,11 +41,13 @@ func ntt(a []int, invert bool) []int {
 		}
 		for i := 0; i < n; i += length {
 			half := length / 2
+			wn := 1 // w^j を順に掛けていく
 			for j := 0; j < half; j++ {
 				u := a[i+j]
-				v := a[i+j+half] * w % mod
+				v := a[i+j+half] * wn % mod
 				a[i+j] = (u + v) % mod
 				a[i+j+half] = (u - v + mod) % mod
+				wn = wn * w % mod
 			}
 		}
 	}
@@ -75,5 +80,6 @@ func convolution(a, b []int) []int {
 }
 
 func main() {
-	fmt.Println(convolution([]int{1, 1}, []int{1, 1}))
+	fmt.Println(strings.Trim(fmt.Sprint(convolution([]int{1, 1}, []int{1, 1})), "[]"))
+	fmt.Println(strings.Trim(fmt.Sprint(convolution([]int{1, 2, 3}, []int{4, 5})), "[]"))
 }

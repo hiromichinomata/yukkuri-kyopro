@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 func suffixArray(s string) []int {
@@ -59,5 +60,8 @@ func suffixArray(s string) []int {
 func main() {
 	s := "banana"
 	sa := suffixArray(s)
-	fmt.Println(sa)
+	fmt.Println(strings.Trim(fmt.Sprint(sa), "[]"))
+	for _, i := range sa {
+		fmt.Println(s[i:])
+	}
 }

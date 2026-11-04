@@ -20,9 +20,12 @@ func main() {
 		pairs = append(pairs, kv{k, v})
 	}
 	sort.Slice(pairs, func(i, j int) bool {
-		return pairs[i].v > pairs[j].v
+		if pairs[i].v != pairs[j].v {
+			return pairs[i].v > pairs[j].v // 多い順
+		}
+		return pairs[i].k < pairs[j].k
 	})
-	if len(pairs) >= 2 {
-		fmt.Println(pairs[:2])
+	for _, p := range pairs[:2] {
+		fmt.Println(p.k, p.v)
 	}
 }

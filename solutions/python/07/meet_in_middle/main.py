@@ -24,7 +24,7 @@ def can_make_sum(xs, target):
 def main() -> None:
     xs = [1, 2, 4, 8, 16]
     for t in [0, 7, 15, 31, 32]:
-        print(t, can_make_sum(xs, t))
+        print(t, "Yes" if can_make_sum(xs, t) else "No")
 
 
 if __name__ == "__main__":

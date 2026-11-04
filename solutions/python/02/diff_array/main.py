@@ -12,7 +12,7 @@ def main() -> None:
     a = [0] * (n + 1)
     for i in range(1, n + 1):
         a[i] = a[i - 1] + diff[i]
-    print(a[1:])
+    print(*a[1:])
 
 
 if __name__ == "__main__":

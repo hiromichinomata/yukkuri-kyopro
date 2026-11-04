@@ -50,7 +50,7 @@ def mo_count_distinct(a, queries):
 def main() -> None:
     a = [1, 2, 1, 3, 2, 1, 2]
     queries = [(0, 6), (2, 5), (1, 4)]
-    print(mo_count_distinct(a, queries))
+    print(*mo_count_distinct(a, queries))
 
 
 if __name__ == "__main__":

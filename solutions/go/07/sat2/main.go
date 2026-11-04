@@ -49,6 +49,12 @@ func scc(g [][]int, n int) []int {
 	return comp
 }
 
+// リテラルの番号: 2*i が「x_i が真」、2*i+1 が「x_i が偽」。l ^ 1 で否定になる
+// addClause: 節 (a ∨ b) は「¬a なら b」「¬b なら a」の 2 本の含意
+func addClause(implications [][2]int, a, b int) [][2]int {
+	return append(implications, [2]int{a ^ 1, b}, [2]int{b ^ 1, a})
+}
+
 func sat2Solvable(implications [][2]int, nVars int) bool {
 	n := 2 * nVars
 	g := make([][]int, n)
@@ -64,8 +70,21 @@ func sat2Solvable(implications [][2]int, nVars int) bool {
 	return true
 }
 
+func yesNo(b bool) string {
+	if b {
+		return "Yes"
+	}
+	return "No"
+}
+
 func main() {
-	nVars := 2
-	implications := [][2]int{{1, 2}, {3, 2}}
-	fmt.Println(sat2Solvable(implications, nVars))
+	// (x0 ∨ x1) ∧ (¬x0 ∨ x1) ∧ (¬x1 ∨ x0) → x0 = x1 = 真 で充足可能
+	var imp [][2]int
+	imp = addClause(imp, 0, 2)
+	imp = addClause(imp, 1, 2)
+	imp = addClause(imp, 3, 0)
+	fmt.Println(yesNo(sat2Solvable(imp, 2)))
+	// さらに (¬x0 ∨ ¬x1) を足すと充足不能
+	imp = addClause(imp, 1, 3)
+	fmt.Println(yesNo(sat2Solvable(imp, 2)))
 }

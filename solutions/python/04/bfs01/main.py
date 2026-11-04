@@ -28,7 +28,7 @@ def main() -> None:
     g[2].append((1, 1))
     g[2].append((3, 0))
     g[3].append((2, 0))
-    print(bfs01(g, 0, n))
+    print(*bfs01(g, 0, n))
 
 
 if __name__ == "__main__":

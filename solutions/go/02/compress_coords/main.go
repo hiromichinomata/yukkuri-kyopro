@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sort"
+	"strings"
 )
 
 func main() {
@@ -20,6 +21,6 @@ func main() {
 	for i, v := range values {
 		compressed[i] = sort.SearchInts(uniq, v)
 	}
-	fmt.Println(uniq)
-	fmt.Println(compressed)
+	fmt.Println(strings.Trim(fmt.Sprint(uniq), "[]"))
+	fmt.Println(strings.Trim(fmt.Sprint(compressed), "[]"))
 }

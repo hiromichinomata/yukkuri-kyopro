@@ -1,6 +1,3 @@
-import sys
-
-
 def gcd(a: int, b: int) -> int:
     while b:
         a, b = b, a % b
@@ -8,7 +5,7 @@ def gcd(a: int, b: int) -> int:
 
 
 def main() -> None:
-    a, b = map(int, sys.stdin.readline().split())
+    a, b = map(int, input().split())
     print(gcd(a, b))
 
 

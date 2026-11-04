@@ -18,6 +18,13 @@ func convexHull(pts []point) []point {
 		}
 		return pts[i].y < pts[j].y
 	})
+	uniq := pts[:0] // 同じ点を除く（Python の set に相当）
+	for i, p := range pts {
+		if i == 0 || p != pts[i-1] {
+			uniq = append(uniq, p)
+		}
+	}
+	pts = uniq
 	if len(pts) <= 1 {
 		return pts
 	}
@@ -40,6 +47,8 @@ func convexHull(pts []point) []point {
 }
 
 func main() {
-	pts := []point{{0, 0}, {1, 0}, {0, 1}, {1, 1}}
-	fmt.Println(convexHull(pts))
+	pts := []point{{0, 0}, {2, 0}, {0, 2}, {2, 2}, {1, 1}} // (1, 1) は内側
+	for _, p := range convexHull(pts) {
+		fmt.Println(p.x, p.y)
+	}
 }
