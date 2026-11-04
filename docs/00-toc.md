@@ -260,7 +260,6 @@ docs/
 solutions/
   python/{00,01,…}/   # 番号は docs/NN.md の NN と一致（01.md → python/01/）
   go/{00,01,…}/
-scripts/       # ローカル検証・テンプレ生成（任意）
 ```
 
 **各 Part ファイル（`01.md` など）の中身の目安**

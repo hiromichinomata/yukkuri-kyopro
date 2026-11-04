@@ -29,7 +29,6 @@ docs/           # 本文（00-toc.md = 目次、00.md〜 = 各 Part）
 solutions/
   python/       # 章番号ごと（例: 01/ = docs/01.md に対応）
   go/
-scripts/        # ローカル検証用（任意）
 ```
 
 - **ファイル番号と Part**: `docs/NN.md` の **NN** が Part 番号と一致（例: `00.md` = Part 0、`01.md` = Part 1 灰色）。
@@ -42,10 +41,6 @@ scripts/        # ローカル検証用（任意）
 ### Python
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -e ".[dev]"     # テスト実行時のみ
-
 # 例: Part 0 の A+B を実行
 python3 solutions/python/00/aplusb/main.py < solutions/python/00/aplusb/input.txt
 ```
@@ -58,46 +53,6 @@ go run ./solutions/go/00/aplusb/ < solutions/python/00/aplusb/input.txt
 ```
 
 入出力は AtCoder 形式（標準入力 → 標準出力）を想定しています。
-
-### ブログ用に書き出す
-
-本文の解答リンクは `../solutions/...` のような相対パスなので、md をそのままブログに貼ると切れます。次のスクリプトで、相対リンクを GitHub の URL に置き換えたコピーを `dist/blog/` に書き出してから使ってください（`docs/` は変更しません）。
-
-```bash
-python3 scripts/export_blog.py                                            # 章どうしのリンクも GitHub 上の md へ
-python3 scripts/export_blog.py --chapter-url 'https://example.com/kyopro/{stem}/'  # 章どうしのリンクをブログの URL に
-python3 scripts/export_blog.py --branch v2                                # main 以外のブランチを指す場合
-```
-
-章内の見出しへのリンク（`#36-union-finddsu` など）は GitHub と同じ規則のまま残します。ブログ側で見出しのアンカーの付け方が違う場合は、そちらに合わせて調整してください。
-
-### テスト
-
-本文のテンプレートは、小さいランダム入力で **愚直解（全探索）と比べるテスト** を付けています。`tests/test_docs_code.py` は、本文（`docs/*.md`）に載っている Python のコードブロックそのものも同じテストにかけます。手元で次を実行してください。
-
-```bash
-python3 -m pytest                  # Python（tests/ と solutions/python/）。Python と Go の出力比較も含む
-python3 -m pytest -m "not parity"  # 出力比較（Go のビルドで 1 分ほどかかる）を除いて手早く
-go test ./solutions/go/...         # Go（各ディレクトリの main_test.go）
-```
-
-`tests/test_links.py` は本文・README の相対リンクと見出しへのアンカーが切れていないかを確かめます。`tests/test_py_go_parity.py` は、同じディレクトリの Python 版と Go 版が同じ入力（`input.txt`、なければ空）に同じ出力を返すかを確かめます。出力は AtCoder と同じく、列は空白区切り・真偽は `Yes` / `No` にそろえています。
-
-テンプレートを書き換えたら、両方が通ることを確認してから本文に反映してください。
-
-## 執筆（Cursor Agent）
-
-章の執筆・`solutions/` 同期はプロジェクトスキル **yukkuri-kyopro-chapter**（`.cursor/skills/yukkuri-kyopro-chapter/`）を使う。依頼例: `@yukkuri-kyopro-chapter docs/01.md を執筆してください`。
-
-## 開発メモ
-
-| 項目 | 場所 |
-|------|------|
-| 目次・章立て | [docs/00-toc.md](docs/00-toc.md) |
-| 問題と章の対応 | [docs/12.md](docs/12.md) |
-| スニペット | [docs/11.md](docs/11.md) |
-
-ローカルで AtCoder の問題を試すときは [AtCoder CLI](https://github.com/Tatamo/atcoder-cli) や [online-judge-tools](https://github.com/online-judge-tools/oj) を使い、生成されたテストデータや `contests/` ディレクトリは **コミットしない**（`.gitignore` 済み）。
 
 ## ライセンス
 

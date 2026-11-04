@@ -144,7 +144,7 @@ solutions/go/{NN}/{topic_or_problem_id}/main.go
 → [solutions/python/NN/<dir>/](../solutions/python/NN/<dir>/) / [solutions/go/NN/<dir>/](../solutions/go/NN/<dir>/)
 ```
 
-（`docs/NN.md` からの相対パスなので `../solutions/`。ブログに載せるときは `scripts/export_blog.py` で絶対 URL に変換する）
+（`docs/NN.md` からの相対パスなので `../solutions/`。ブログに載せるときは `scripts/export_blog.py` で絶対 URL に変換する。運用の情報は [CONTRIBUTING.md](../../../CONTRIBUTING.md) に書き、README・本文には書かない）
 
 実行例:
 

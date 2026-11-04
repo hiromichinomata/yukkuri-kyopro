@@ -9,7 +9,7 @@ from conftest import ROOT
 FILES = sorted(
     [p for p in (ROOT / "docs").glob("*.md")]
     + [p for p in (ROOT / "solutions").glob("*/*/README.md")]
-    + [ROOT / "README.md", ROOT / "solutions" / "README.md"]
+    + [ROOT / "README.md", ROOT / "CONTRIBUTING.md", ROOT / "solutions" / "README.md"]
 )
 
 
