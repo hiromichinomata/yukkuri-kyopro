@@ -162,7 +162,7 @@ go run ./solutions/go/NN/.../ < solutions/python/NN/.../input.txt
 | 問題 ID 名の解答（`abc200_a/` など） | AtCoder の問題文を読み、**公式サンプルをすべて** Python・Go で通す | 手元で実行（サンプルはコミットしない。`input.txt` は入力例 1 のみ） |
 | テンプレート（データ構造・アルゴリズム） | 小さいランダム入力で **愚直解（全探索）と比較** | Python: `tests/test_templates.py`、Go: 同ディレクトリの `main_test.go` |
 | 本文で解説した ARC / AGC の解答 | 愚直解（構築問題は出力チェッカー）と比較 | `tests/test_problems.py` |
-| 本文のコードブロック | 解答と同じコードであること。本文の Python ブロックは自動でテストにかかる | `tests/test_docs_code.py`（本文の節から `solutions/python/NN/<dir>/` へリンクしておく） |
+| 本文のコードブロック | 解答と同じコードであること。本文の Python ブロックは自動でテストにかかる | `tests/test_docs_code.py`（本文の節から `solutions/python/NN/<dir>/` へリンクしておく）。プログラム全体を載せたブロックは `tests/test_docs_programs.py` で `main.py` / `main.go` と比べる |
 | Python 版と Go 版 | 同じ入力（`input.txt`、なければ空）に **同じ出力** | `tests/test_py_go_parity.py` |
 | リンク | 相対リンク・アンカー（`#見出し`）が切れていない | `tests/test_links.py` |
 

@@ -18,7 +18,8 @@ go test ./solutions/go/...         # Go（各ディレクトリの main_test.go�
 |--------|--------------|
 | `tests/test_templates.py`、`tests/test_problems.py` | テンプレートと解答を、小さいランダム入力で愚直解（全探索）と比べる |
 | `tests/test_docs_code.py` | 本文に載っている Python のコードブロックそのものを、上と同じテストにかける |
-| `tests/test_docs_go.py` | 本文の Go のコードが `solutions/go/` の `main.go` と一致する |
+| `tests/test_docs_go.py` | 本文の Go の関数・型が `solutions/go/` の `main.go` と一致する |
+| `tests/test_docs_programs.py` | 本文に載せたプログラム全体（`main` まで含むブロック）が、リンク先の `main.py` / `main.go` と一致する |
 | `tests/test_snippets.py` | 本文のすべてのコードブロックが文法上正しい（Python 3.11 / `gofmt`） |
 | `tests/test_py_go_parity.py` | 同じディレクトリの Python 版と Go 版が、同じ入力に同じ出力を返す |
 | `tests/test_links.py` | 本文・README の相対リンクと見出しへのアンカーが切れていない |
