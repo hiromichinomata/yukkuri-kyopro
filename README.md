@@ -20,7 +20,8 @@ AtCoder（ABC / ARC / AGC）を土台に、レーティング帯ごとに競技�
 1. [docs/00-toc.md](docs/00-toc.md) で全体像を把握する。
 2. 自分の AtCoder レーティングに近い Part（[docs/01.md](docs/01.md) 以降）から読む。前の Part は復習用でスキップしてよい。
 3. 各 Part 内は **解説 → ハンズオン → まとめ演習** の順を推奨。
-4. コードは本文ではなく [solutions/](solutions/) を参照し、Python と Go を見比べる。
+4. 解説付きの問題は、要約のあとの **💡 ヒント** で一度止まり、自分で考えてから続きを読む。
+5. コードは本文ではなく [solutions/](solutions/) を参照し、Python と Go を見比べる。
 
 ## リポジトリ構成
 
