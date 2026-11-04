@@ -718,3 +718,198 @@ def test_arc167_e():
             for y in range(min(ys), max(ys))
         )
         assert squares == 1
+
+
+# ---------- Part 8 の推奨問題 ----------
+def test_arc170_e():
+    from fractions import Fraction
+
+    MOD = 998244353
+
+    def brute(n, P):  # 問題文どおりの処理を、確率つきで全部展開する
+        p = Fraction(P, 100)
+        total = Fraction(0)
+        stack = [((-1,) * n, ((0, 0),), Fraction(1))]
+        while stack:
+            D, Q, pr = stack.pop()
+            if not Q:
+                total += pr * sum(D)
+                continue
+            (v, d), rest = Q[0], Q[1:]
+            if D[v] != -1:
+                stack.append((D, rest, pr))
+                continue
+            D = D[:v] + (d,) + D[v + 1 :]
+            states = [(rest, pr)]
+            for x in sorted({(v - 1) % n, (v + 1) % n}):
+                if D[x] == -1:
+                    states = [s for q, pq in states for s in ((((x, d + 1),) + q, pq * p), (q + ((x, d + 1),), pq * (1 - p)))]
+            stack += [(D, q, pq) for q, pq in states]
+        return total
+
+    cases = [(n, P) for n in range(3, 8) for P in (1, 50, 77)]
+    out = run("08/arc170_e", f"{len(cases)}\n" + "".join(f"{n} {P}\n" for n, P in cases)).split()
+    for (n, P), g in zip(cases, out):
+        e = brute(n, P)
+        assert int(g) == e.numerator % MOD * pow(e.denominator, MOD - 2, MOD) % MOD
+
+
+def test_arc171_e():
+    from functools import lru_cache
+
+    def brute(n, m, A, B):
+        cnt = 0
+        for rows in itertools.combinations(range(1, n + 1), m):
+            for cols in itertools.permutations(range(1, n + 1), m):
+                stones = tuple(sorted(zip(rows, cols)))
+                if (A, B) in stones:
+                    continue
+
+                @lru_cache(None)
+                def win(pos, rem):
+                    if not rem:
+                        return pos == (A, B)
+                    i, j = pos
+                    for idx, (x, y) in enumerate(rem):
+                        nxt = None
+                        if x == i:
+                            nxt = (i, y + 1) if y > j else (i, y - 1)
+                        elif y == j:
+                            nxt = (x + 1, j) if x > i else (x - 1, j)
+                        if nxt and 1 <= nxt[0] <= n and 1 <= nxt[1] <= n and win(nxt, rem[:idx] + rem[idx + 1 :]):
+                            return True
+                    return False
+
+                cnt += win((A, B), stones)
+        return cnt
+
+    for n, m, a, b in [(6, 4, 2, 3), (5, 3, 1, 3), (6, 4, 1, 1), (6, 4, 3, 4), (5, 4, 2, 2), (6, 6, 3, 3), (4, 4, 1, 2)]:
+        assert run("08/arc171_e", f"{n} {m} {a} {b}\n").split() == [str(brute(n, m, a, b))]
+
+
+def test_arc172_e():
+    first = {}
+    for n in range(1, 20001):
+        if n % 2 and n % 5:
+            first.setdefault(pow(n, n, 10**9), n)
+    xs = list(first)[:200]
+    out = run("08/arc172_e", f"{len(xs)}\n" + "".join(f"{x}\n" for x in xs)).split()
+    assert out == [str(first[x]) for x in xs]
+
+
+def test_agc024_d():
+    # T は頂点を無限に足せるので全探索できない。公式サンプルの値で確かめる（解き方は公式解説どおり）
+    cases = {
+        "5\n1 2\n2 3\n3 4\n3 5\n": "2 4",
+        "8\n1 2\n2 3\n4 3\n5 4\n6 7\n6 8\n3 6\n": "3 4",
+        "10\n1 2\n2 3\n3 4\n4 5\n5 6\n6 7\n3 8\n5 9\n3 10\n": "4 6",
+        "13\n5 6\n6 4\n2 8\n4 7\n8 9\n3 2\n10 4\n11 10\n2 4\n13 10\n1 8\n12 1\n": "4 12",
+    }
+    for inp, exp in cases.items():
+        assert run("08/agc024_d", inp).split() == exp.split()
+
+
+def test_agc026_d():
+    for _ in range(80):
+        h = [R.randint(1, 4) for _ in range(R.randint(1, 5))]
+        if sum(h) > 14:
+            continue
+        cells = [(i, j) for i in range(len(h)) for j in range(h[i])]
+        exp = 0
+        for bits in itertools.product([0, 1], repeat=len(cells)):
+            c = dict(zip(cells, bits))
+            exp += all(c[(i, j)] + c[(i, j + 1)] + c[(i + 1, j)] + c[(i + 1, j + 1)] == 2 for i in range(len(h) - 1) for j in range(min(h[i], h[i + 1]) - 1))
+        assert run("08/agc026_d", f"{len(h)}\n{' '.join(map(str, h))}\n").split() == [str(exp)]
+
+
+def test_agc027_d():
+    for n in list(range(2, 25)) + [100]:
+        a = [list(map(int, l.split())) for l in run("08/agc027_d", f"{n}\n").split("\n") if l.strip()]
+        vals = [v for row in a for v in row]
+        assert len(a) == n and len(set(vals)) == n * n and all(1 <= v <= 10**15 for v in vals)
+        mods = {max(a[i][j], a[x][y]) % min(a[i][j], a[x][y]) for i in range(n) for j in range(n) for x, y in ((i + 1, j), (i, j + 1)) if x < n and y < n}
+        assert len(mods) == 1 and min(mods) > 0
+
+
+def test_agc028_d():
+    def comps(n2, pairs):
+        par = list(range(n2))
+
+        def f(x):
+            while par[x] != x:
+                x = par[x]
+            return x
+
+        for a, b in pairs:
+            par[f(a)] = f(b)
+        for (a, b), (c, d) in itertools.combinations(pairs, 2):
+            a, b = sorted((a, b))
+            if (a < c < b) != (a < d < b):  # 線分が交差すると同じ成分
+                par[f(a)] = f(c)
+        return len({f(i) for i in range(n2)})
+
+    def matchings(pts):
+        if not pts:
+            yield []
+            return
+        for i in range(1, len(pts)):
+            for m in matchings(pts[1:i] + pts[i + 1 :]):
+                yield [(pts[0], pts[i])] + m
+
+    for _ in range(40):
+        n, k = R.randint(1, 4), None
+        k = R.randint(0, n)
+        pts = list(range(2 * n))
+        R.shuffle(pts)
+        fixed = [(pts[2 * i], pts[2 * i + 1]) for i in range(k)]
+        exp = sum(comps(2 * n, fixed + m) for m in matchings(sorted(pts[2 * k :])))
+        data = f"{n} {k}\n" + "".join(f"{a + 1} {b + 1}\n" for a, b in fixed)
+        assert run("08/agc028_d", data).split() == [str(exp)]
+
+
+def test_agc029_e():
+    import heapq
+
+    for _ in range(100):
+        n = R.randint(2, 10)
+        ids = list(range(1, n + 1))
+        R.shuffle(ids)
+        edges = [(ids[i], ids[R.randrange(i)]) for i in range(1, n)]
+        g = {v: [] for v in range(1, n + 1)}
+        for a, b in edges:
+            g[a].append(b)
+            g[b].append(a)
+        exp = []
+        for r in range(2, n + 1):  # 問題文どおりに歩く
+            seen, h, cnt = {r}, list(g[r]), 0
+            heapq.heapify(h)
+            while True:
+                v = heapq.heappop(h)
+                if v in seen:
+                    continue
+                seen.add(v)
+                cnt += 1
+                if v == 1:
+                    break
+                for t in g[v]:
+                    if t not in seen:
+                        heapq.heappush(h, t)
+            exp.append(str(cnt))
+        assert run("08/agc029_e", f"{n}\n" + "".join(f"{a} {b}\n" for a, b in edges)).split() == exp
+
+
+def test_agc030_f():
+    for _ in range(60):
+        n = R.randint(1, 4)
+        perm = list(range(1, 2 * n + 1))
+        R.shuffle(perm)
+        a = [v if R.random() < 0.4 else -1 for v in perm]
+        missing = [v for v in range(1, 2 * n + 1) if v not in a]
+        holes = [i for i in range(2 * n) if a[i] == -1]
+        bs = set()
+        for p in itertools.permutations(missing):
+            b = a[:]
+            for i, v in zip(holes, p):
+                b[i] = v
+            bs.add(tuple(min(b[2 * i], b[2 * i + 1]) for i in range(n)))
+        assert run("08/agc030_f", f"{n}\n{' '.join(map(str, a))}\n").split() == [str(len(bs))]
