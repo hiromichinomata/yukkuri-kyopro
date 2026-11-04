@@ -37,7 +37,10 @@ AtCoder から取得したテストデータは **コミットしない**（`.gi
 python3 scripts/export_blog.py                                            # 章どうしのリンクも GitHub 上の md へ
 python3 scripts/export_blog.py --chapter-url 'https://example.com/kyopro/{stem}/'  # 章どうしのリンクをブログの URL に
 python3 scripts/export_blog.py --branch v2                                # main 以外のブランチを指す場合
+python3 scripts/export_blog.py --single dist/blog/yukkuri-kyopro.md       # 目次を除く全章を 1 つの md に
 ```
+
+`--single` では、章の前後のナビ（← 前 | 目次 | 次 →）と目次へのリンクを消し、章どうしのリンクをまとめた md の中の見出しへのアンカーにします。リンクの文字が `01.md` のようなファイル名のときは、章の見出し（`Part 1 — 灰色（Gray）` など）に置き換えます。
 
 章内の見出しへのリンク（`#36-union-finddsu` など）は GitHub と同じ規則のまま残します。
 
