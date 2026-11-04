@@ -23,6 +23,7 @@ go test ./solutions/go/...         # Go（各ディレクトリの main_test.go�
 | `tests/test_snippets.py` | 本文のすべてのコードブロックが文法上正しい（Python 3.11 / `gofmt`） |
 | `tests/test_py_go_parity.py` | 同じディレクトリの Python 版と Go 版が、同じ入力に同じ出力を返す |
 | `tests/test_links.py` | 本文・README の相対リンクと見出しへのアンカーが切れていない |
+| `tests/test_style.py` | 表記の揺れ（セグメント木・テンプレート・0-indexed などの用語、全角英数字、日本語と英数字の間のスペース）がない |
 
 テンプレートを書き換えたら、テストが通ることを確認してから本文に反映してください。出力は AtCoder と同じく、列は空白区切り・真偽は `Yes` / `No` にそろえています。
 

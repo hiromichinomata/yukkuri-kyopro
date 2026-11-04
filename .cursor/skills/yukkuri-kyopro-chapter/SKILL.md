@@ -192,6 +192,8 @@ gofmt -l solutions/go              # 何も出なければ OK
 - テストを通していないコードを本文に載せる
 - 章番号と Part の取り違え（`docs/NN.md` の NN = Part 番号、`00.md` = Part 0）
 - **解説を増やす名目で Python/Go 実装を削る・コメント化する**（両立が原則）
+- README・本文に **テストの実行方法やブログ書き出しなどの運用の情報** を書く（学習のノイズになる。[CONTRIBUTING.md](../../../CONTRIBUTING.md) に書く）
+- 表記の揺れ（**セグメント木**・**テンプレート**・**0-indexed / 1-indexed** にそろえる。日本語と英数字の間は半角スペース）。`tests/test_style.py` で確かめる
 
 ## 付録（09〜15）
 

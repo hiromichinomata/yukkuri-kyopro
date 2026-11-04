@@ -24,7 +24,7 @@
 | [max_flow/](max_flow/) | 増加路 BFS（入門） | [5.4](../../../docs/05.md#54-フロー入門二部マッチング) |
 | [probability_dp/](probability_dp/) | 期待値 | [5.8](../../../docs/05.md#58-確率期待値-dp) |
 | [rolling_hash/](rolling_hash/) | ローリングハッシュ（部分文字列を O(1) で比較） | [5.6](../../../docs/05.md#56-文字列ローリングハッシュkmpz-アルゴリズム) |
-| [segtree_lazy/](segtree_lazy/) | 計算量 | [5.3](../../../docs/05.md#53-セグメントツリー応用-lazy-propagation) |
+| [segtree_lazy/](segtree_lazy/) | 計算量 | [5.3](../../../docs/05.md#53-セグメント木応用-lazy-propagation) |
 | [z_algorithm/](z_algorithm/) | Z アルゴリズム | [5.6](../../../docs/05.md#56-文字列ローリングハッシュkmpz-アルゴリズム) |
 
 ```bash
