@@ -720,6 +720,35 @@ def test_arc167_e():
         assert squares == 1
 
 
+def test_arc167_e_impossible():
+    # S = 1, 2, 3, 5, 7 で作れないことを全探索で確かめる。
+    # 含む正方形を [0,1]^2 に平行移動してよい。正方形の中心から距離 d の頂点があると、
+    # 三角形は「その頂点」と「中心を通る長さ 1 の線分」を含むので面積 ≥ d/2。
+    # 面積 ≤ 7/2 なら d ≤ 7 で、頂点の座標は -6〜7 に収まる
+    pts = [(x, y) for x in range(-6, 8) for y in range(-6, 8)]
+    corners = ((0, 0), (1, 0), (0, 1), (1, 1))
+
+    def cr(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+    def inside(p, a, b, c):
+        d = (cr(a, b, p), cr(b, c, p), cr(c, a, p))
+        return all(x >= 0 for x in d) or all(x <= 0 for x in d)
+
+    found = []
+    for a, b, c in itertools.combinations(pts, 3):
+        s = abs(cr(a, b, c))
+        if s in (1, 2, 3, 5, 7) and all(inside(q, a, b, c) for q in corners):
+            xs, ys = (a[0], b[0], c[0]), (a[1], b[1], c[1])
+            squares = sum(
+                all(inside(q, a, b, c) for q in ((x, y), (x + 1, y), (x, y + 1), (x + 1, y + 1)))
+                for x in range(min(xs), max(xs))
+                for y in range(min(ys), max(ys))
+            )
+            if squares == 1:
+                found.append((s, a, b, c))
+    assert found == []
+
 # ---------- Part 8 の推奨問題 ----------
 def test_arc170_e():
     from fractions import Fraction
@@ -798,7 +827,7 @@ def test_arc172_e():
 
 
 def test_agc024_d():
-    # T は頂点を無限に足せるので全探索できない。公式サンプルの値で確かめる（解き方は公式解説どおり）
+    # 公式サンプル（足す数を絞った全探索は test_agc024_d_bruteforce）
     cases = {
         "5\n1 2\n2 3\n3 4\n3 5\n": "2 4",
         "8\n1 2\n2 3\n4 3\n5 4\n6 7\n6 8\n3 6\n": "3 4",
@@ -808,6 +837,78 @@ def test_agc024_d():
     for inp, exp in cases.items():
         assert run("08/agc024_d", inp).split() == exp.split()
 
+
+
+def _agc024_measure(adj):
+    """木の (色の数の最小, 葉の数)。色の数の最小は「根付き木として同型」で分けたクラスの数"""
+    n = len(adj)
+
+    def canon(v, p):
+        return "(" + "".join(sorted(canon(t, v) for t in adj[v] if t != p)) + ")"
+
+    colors = len({canon(v, -1) for v in range(n)})
+    leaves = sum(len(a) == 1 for a in adj)
+    return colors, leaves
+
+
+def test_agc024_d_bruteforce():
+    # T は頂点を無限に足せるので完全な全探索はできない。代わりに 2 方向から確かめる。
+    # (1) 解答の値以下の木が、頂点を 3 個まで足したすべての木の中にない（足す数を絞った全探索）
+    # (2) 解答の値を実際に作れる（中心から各深さの子の数を最大にそろえた木を作って測る）
+    from collections import deque
+
+    def add_upto(adj, k):
+        yield adj
+        if k == 0:
+            return
+        for v in range(len(adj)):
+            nxt = [a[:] for a in adj] + [[v]]
+            nxt[v].append(len(adj))
+            yield from add_upto(nxt, k - 1)
+
+    def build(adj, roots):
+        n = len(adj)
+        dist, order, q = [-1] * n, [], deque(roots)
+        for r in roots:
+            dist[r] = 0
+        while q:
+            v = q.popleft()
+            order.append(v)
+            for t in adj[v]:
+                if dist[t] == -1:
+                    dist[t] = dist[v] + 1
+                    q.append(t)
+        mc = [0] * (max(dist) + 1)
+        for v in order:
+            mc[dist[v]] = max(mc[dist[v]], sum(dist[t] == dist[v] + 1 for t in adj[v]))
+        # 深さごとに、どの頂点も子の数が mc[d] の完全な木を作る
+        new = [[] for _ in roots]
+        if len(roots) == 2:
+            new[0].append(1)
+            new[1].append(0)
+        level = list(range(len(roots)))
+        for d in range(len(mc)):
+            nxt = []
+            for v in level:
+                for _ in range(mc[d]):
+                    new.append([v])
+                    new[v].append(len(new) - 1)
+                    nxt.append(len(new) - 1)
+            level = nxt
+        return new
+
+    for _ in range(30):
+        n = R.randint(2, 7)
+        edges = [(i, R.randrange(i)) for i in range(1, n)]
+        adj = [[] for _ in range(n)]
+        for a, b in edges:
+            adj[a].append(b)
+            adj[b].append(a)
+        got = tuple(map(int, run("08/agc024_d", f"{n}\n" + "".join(f"{a + 1} {b + 1}\n" for a, b in edges)).split()))
+        assert got <= min(_agc024_measure(t) for t in add_upto(adj, 3))
+        made = [_agc024_measure(build(adj, [c])) for c in range(n)]
+        made += [_agc024_measure(build(adj, [u, v])) for u in range(n) for v in adj[u] if u < v]
+        assert got in made
 
 def test_agc026_d():
     for _ in range(80):
