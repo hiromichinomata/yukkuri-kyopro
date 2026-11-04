@@ -35,3 +35,17 @@
 ```bash
 go run ./solutions/go/04/abc035_c/ < solutions/python/04/abc035_c/input.txt
 ```
+
+## 解き方のメモ（本文で解説していない問題）
+
+本文の表にだけ載せている問題の方針です。まず自分で考えてから読んでください。
+
+- **[abc035_c](https://atcoder.jp/contests/abc035/tasks/abc035_c)**（[abc035_c/](abc035_c/)）: いもす法。区間 [l, r] を裏返すたびに差分配列に +1 と −1 を入れ、最後に累積和を取る。裏返した回数が奇数なら 1。
+- **[abc147_d](https://atcoder.jp/contests/abc147/tasks/abc147_d)**（[abc147_d/](abc147_d/)）: ビットごとに考える。b ビット目が 1 になる組の数は「そのビットが 1 の数」×「0 の数」で、それぞれ 2^b ずつ寄与する。
+- **[abc154_e](https://atcoder.jp/contests/abc154/tasks/abc154_e)**（[abc154_e/](abc154_e/)）: 桁 DP。dp[tight][c] を「上の桁から決めて、0 でない桁を c 個使った数の個数」（tight はここまで N と同じか）とし、ちょうど K 個のものを数える。
+- **[abc180_e](https://atcoder.jp/contests/abc180/tasks/abc180_e)**（[abc180_e/](abc180_e/)）: 費用が三角不等式を満たすので、各都市をちょうど 1 回ずつ回る巡回でよい。bit DP（dp[mask][v]）で巡回セールスマン問題として解く。
+- **[abc186_d](https://atcoder.jp/contests/abc186/tasks/abc186_d)**（[abc186_d/](abc186_d/)）: ソートしても、ペアの差の絶対値の和は変わらない。ソート後は a_j が「自分より前の j 個」との差で j 回足され、前の値の和が引かれるので、累積和で求まる。
+- **[abc187_e](https://atcoder.jp/contests/abc187/tasks/abc187_e)**（[abc187_e/](abc187_e/)）: 頂点 1 を根にする。「辺の片側に足す」操作は、子の側なら「その部分木に足す」、親の側なら「根に足して、子の部分木から引く」と言い換え、最後に根から累積和を流す。
+- **[abc194_d](https://atcoder.jp/contests/abc194/tasks/abc194_d)**（[abc194_d/](abc194_d/)）: 連結成分に k 頂点入っているとき、外の頂点を選ぶ確率は (N − k) / N。成功まで繰り返す回数の期待値は N / (N − k) なので、k = 1〜N − 1 で足す（期待値の線形性）。
+- **[arc118_a](https://atcoder.jp/contests/arc118/tasks/arc118_a)**（[arc118_a/](arc118_a/)）: 税抜き A が 100 増えると、税込みはちょうど 100 + t 増える（周期性）。1 周期（A = 1〜100）で抜ける t 個の値を求め、N 番目を周期と余りから計算する。
+- **[dp_s](https://atcoder.jp/contests/dp/tasks/dp_s)**（[dp_s/](dp_s/)）: 桁 DP。dp[tight][r] を「上の桁から決めて、桁和を D で割った余りが r の数の個数」とする。0 も数えてしまうので最後に 1 引く。

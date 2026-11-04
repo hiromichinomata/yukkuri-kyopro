@@ -21,3 +21,13 @@
 ```bash
 go run ./solutions/go/01/abc081_a/ < solutions/python/01/abc081_a/input.txt
 ```
+
+## 解き方のメモ（本文で解説していない問題）
+
+本文の表にだけ載せている問題の方針です。まず自分で考えてから読んでください。
+
+- **[abc085_b](https://atcoder.jp/contests/abc085/tasks/abc085_b)**（[abc085_b/](abc085_b/)）: 上に積めるのは直径が真に小さい餅だけなので、使えるのは異なる直径の数。`set` で種類数を数える。
+- **[abc200_a](https://atcoder.jp/contests/abc200/tasks/abc200_a)**（[abc200_a/](abc200_a/)）: 1〜100 年が 1 世紀なので、N を 100 で割って切り上げる（`(N + 99) // 100`）。
+- **[abc201_a](https://atcoder.jp/contests/abc201/tasks/abc201_a)**（[abc201_a/](abc201_a/)）: 並べ替えてよいので小さい順にソートし、隣どうしの差が等しいかを見る。
+- **[abc214_a](https://atcoder.jp/contests/abc214/tasks/abc214_a)**（[abc214_a/](abc214_a/)）: 問題文の範囲ごとに if で分ける。境界の値（125 と 211）がどちらに入るかに注意する。
+- **[abc215_a](https://atcoder.jp/contests/abc215/tasks/abc215_a)**（[abc215_a/](abc215_a/)）: 文字列が `Hello,World!` と完全に一致するかを比べる。大文字・記号・空白の有無まで同じでなければならない。

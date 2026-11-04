@@ -39,3 +39,17 @@
 ```bash
 go run ./solutions/go/03/abc084_d/ < solutions/python/03/abc084_d/input.txt
 ```
+
+## 解き方のメモ（本文で解説していない問題）
+
+本文の表にだけ載せている問題の方針です。まず自分で考えてから読んでください。
+
+- **[abc084_d](https://atcoder.jp/contests/abc084/tasks/abc084_d)**（[abc084_d/](abc084_d/)）: エラトステネスの篩で素数を求め、「x も (x + 1) / 2 も素数」になる奇数 x の個数を累積和にしておく。各クエリは差を取って O(1)。
+- **[abc126_c](https://atcoder.jp/contests/abc126/tasks/abc126_c)**（[abc126_c/](abc126_c/)）: サイコロの目ごとに、得点が K 以上になるまでに必要な表の回数を数え、その確率 (1/2)^回数 を足して N で割る。
+- **[abc156_d](https://atcoder.jp/contests/abc156/tasks/abc156_d)**（[abc156_d/](abc156_d/)）: 花束の作り方は全部で 2^n − 1 通り。そこから a 本と b 本の作り方 C(n, a)、C(n, b) を引く。n が大きく a, b が小さいので、C(n, r) は n(n − 1)…(n − r + 1) / r! を mod で計算する。
+- **[abc172_d](https://atcoder.jp/contests/abc172/tasks/abc172_d)**（[abc172_d/](abc172_d/)）: 主客転倒。K × f(K) の和は、各 d について「d の倍数 K」の和 d × m(m + 1) / 2（m = N // d）を足したものに等しい。O(N)。
+- **[abc183_c](https://atcoder.jp/contests/abc183/tasks/abc183_c)**（[abc183_c/](abc183_c/)）: 都市 1 を始点・終点に固定し、残りの N − 1 都市を回る順番を順列全探索する。移動時間の合計がちょうど K の順番を数える。
+- **[abc213_c](https://atcoder.jp/contests/abc213/tasks/abc213_c)**（[abc213_c/](abc213_c/)）: 数字のある行・列だけが残るので、行番号と列番号をそれぞれ座標圧縮すればよい。
+- **[abc214_d](https://atcoder.jp/contests/abc214/tasks/abc214_d)**（[abc214_d/](abc214_d/)）: 辺を重みの小さい順に Union-Find でつなぐ。辺 (u, v, w) をつないだ瞬間に初めて行き来できる組は両側の成分の大きさの積だけあり、その組の値はちょうど w（主客転倒）。
+- **[abc222_c](https://atcoder.jp/contests/abc222/tasks/abc222_c)**（[abc222_c/](abc222_c/)）: ラウンドごとに、順位の隣どうしでじゃんけんの勝敗を決め、「勝ち数の多い順、同じなら番号の小さい順」に並べ直す。問題文どおりのシミュレーション。
+- **[arc104_a](https://atcoder.jp/contests/arc104/tasks/arc104_a)**（[arc104_a/](arc104_a/)）: X + Y = A、X − Y = B を解くと X = (A + B) / 2、Y = (A − B) / 2。
