@@ -6,24 +6,26 @@ import (
 	"os"
 )
 
-// floorSum は sum_{i=0}^{n-1} floor((a*i + b) / m)（AtCoder Library と同じ計算）
-func floorSum(n, m, a, b int) int {
-	ans := 0
-	for {
-		if a >= m {
-			ans += (n - 1) * n / 2 * (a / m)
-			a %= m
-		}
-		if b >= m {
-			ans += n * (b / m)
-			b %= m
-		}
-		yMax := a*n + b
-		if yMax < m {
-			return ans
-		}
-		n, b, m, a = yMax/m, yMax%m, a, m
+// firstInRange は (a*x mod m) が lo 以上 hi 以下になる最小の x ≥ 0（0 ≤ lo ≤ hi < m）。なければ -1。
+// ユークリッドの互除法と同じ形で (a, m) → (m mod a, a) と小さくしていくので O(log m)
+func firstInRange(a, m, lo, hi int) int {
+	if lo == 0 {
+		return 0
 	}
+	a %= m
+	if a == 0 {
+		return -1
+	}
+	x := (lo + a - 1) / a // 折り返さずに届く最小の x
+	if a*x <= hi {
+		return x
+	}
+	// a*x = m*y + (lo〜hi) となる最小の y を探す。⇔ (m*y mod a) が (-hi mod a)〜(-lo mod a) にある
+	y := firstInRange(m%a, a, ((-hi)%a+a)%a, ((-lo)%a+a)%a)
+	if y == -1 {
+		return -1
+	}
+	return (m*y + lo + a - 1) / a
 }
 
 func gcd(a, b int) int {
@@ -35,45 +37,13 @@ func gcd(a, b int) int {
 
 func solve(n, a, b int) (int, int) {
 	g := gcd(a, b)
-	// L = a*l + 1, R = a*r - 1, k = r - l。長さ k が作れる ⇔ f(k, g) ≤ n（f は k について単調）
-	f := func(k, t int) int { return (k - 1) - (a*k-1+b-t)/b }
-	lo, hi := 1, 1
-	for f(hi, g) <= n {
-		hi *= 2
-	}
-	for hi-lo > 1 {
-		mid := (lo + hi) / 2
-		if f(mid, g) <= n {
-			lo = mid
-		} else {
-			hi = mid
-		}
-	}
-	k := lo
-	tl, th := g, b+1 // 条件を満たす t の上限 c
-	for th-tl > 1 {
-		mid := (tl + th) / 2
-		if f(k, mid) <= n {
-			tl = mid
-		} else {
-			th = mid
-		}
-	}
-	c := tl
+	// L = a*l + 1, R = a*r - 1, k = r - l。長さ k・ずれ t で作れる
+	// ⇔ (k-1) - floor((a*k - 1 + b - t) / b) ≤ n ⇔ t ≤ a*k - 1 + b - b*(k-1-n)
+	k := (b*(n+2) - 1 - g) / (b - a)
+	c := min(b, a*k-1+b-b*(k-1-n)) // この k で許される t の上限
 	l := 0
 	if c < b {
-		// (a*x mod b) ≥ b - c となる最小の x ≥ 1（個数を floor_sum で数えて二分探索）
-		count := func(x int) int { return floorSum(x+1, b, a, c) - floorSum(x+1, b, a, 0) }
-		lo2, hi2 := 0, b
-		for hi2-lo2 > 1 {
-			mid := (lo2 + hi2) / 2
-			if count(mid) >= 1 {
-				hi2 = mid
-			} else {
-				lo2 = mid
-			}
-		}
-		l = hi2
+		l = firstInRange(a, b, b-c, b-1) // (a*l mod b) ≥ b - c となる最小の l
 	}
 	return a*l + 1, a*(l+k) - 1
 }
