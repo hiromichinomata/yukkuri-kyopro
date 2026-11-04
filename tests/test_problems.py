@@ -374,3 +374,347 @@ def test_arc151_b():
         R.shuffle(p)
         exp = sum(1 for a in itertools.product(range(1, m + 1), repeat=n) if list(a) < [a[x - 1] for x in p])
         assert run("05/arc151_b", f"{n} {m}\n{' '.join(map(str, p))}\n").split() == [str(exp % 998244353)]
+
+
+# ---------- Part 6 の推奨問題 ----------
+def test_agc022_a():
+    # 26 文字未満: 末尾に最小の未使用文字。26 文字: 全順列の中で次のもの（小さいアルファベットで同じ規則を確認）
+    for _ in range(50):
+        s = "".join(R.sample("abcdefghijklmnopqrstuvwxyz", R.randint(1, 25)))
+        c = min(ch for ch in "abcdefghijklmnopqrstuvwxyz" if ch not in s)
+        assert run("06/agc022_a", s + "\n").split() == [s + c]
+    s = "abcdefghijklmnopqrstuvwxyz"
+    assert run("06/agc022_a", s + "\n").split() == ["abcdefghijklmnopqrstuvwxz"]  # y を z に替える
+    assert run("06/agc022_a", s[::-1] + "\n").split() == ["-1"]
+
+
+def _arc139_check(n, m, out):
+    k, *rest = out.split("\n")
+    pts = [tuple(map(int, l.split())) for l in rest if l.strip()]
+    assert len(pts) == int(k)
+    assert all(1 <= x <= n and 1 <= y <= m for x, y in pts)
+    assert len({x + 3 * y for x, y in pts}) == len(pts) == len({3 * x + y for x, y in pts})
+    return len(pts)
+
+
+def test_arc139_c():
+    def max_k(n, m):  # 点を辺 (x+3y, 3x+y) とみた二部グラフの最大マッチング
+        adj = {}
+        for x in range(1, n + 1):
+            for y in range(1, m + 1):
+                adj.setdefault(x + 3 * y, []).append(3 * x + y)
+        match = {}
+
+        def dfs(u, seen):
+            for v in adj[u]:
+                if v not in seen:
+                    seen.add(v)
+                    if v not in match or dfs(match[v], seen):
+                        match[v] = u
+                        return True
+            return False
+
+        return sum(dfs(u, set()) for u in adj)
+
+    for n in range(1, 8):
+        for m in range(1, 8):
+            assert _arc139_check(n, m, run("06/arc139_c", f"{n} {m}\n")) == max_k(n, m)
+
+
+def test_arc141_c():
+    m = load("06/arc141_c")
+
+    def correct(t):
+        b = 0
+        for c in t:
+            b += 1 if c == "(" else -1
+            if b < 0:
+                return False
+        return b == 0
+
+    def brute(s):
+        ps = [p for p in itertools.permutations(range(1, len(s) + 1)) if correct("".join(s[i - 1] for i in p))]
+        return list(min(ps)), list(max(ps))
+
+    table = {}
+    for n in range(1, 4):
+        for bits in itertools.product("()", repeat=2 * n):
+            s = "".join(bits)
+            if s.count("(") == n:
+                p, q = brute(s)
+                table.setdefault(n, set()).add((tuple(p), tuple(q)))
+                out = run("06/arc141_c", f"{n}\n{' '.join(map(str, p))}\n{' '.join(map(str, q))}\n").strip()
+                assert out != "-1" and brute(out) == (p, q)
+    for _ in range(100):
+        n = R.randint(1, 3)
+        p, q = list(range(1, 2 * n + 1)), list(range(1, 2 * n + 1))
+        R.shuffle(p)
+        R.shuffle(q)
+        out = run("06/arc141_c", f"{n}\n{' '.join(map(str, p))}\n{' '.join(map(str, q))}\n").strip()
+        assert (out != "-1") == ((tuple(p), tuple(q)) in table[n])
+
+
+def test_arc142_d():
+    def brute(n, edges):
+        g = [[] for _ in range(n)]
+        for a, b in edges:
+            g[a].append(b)
+            g[b].append(a)
+
+        def nxt(S):
+            S = sorted(S)
+            res = set()
+            for choice in itertools.product(*[g[v] for v in S]):
+                es = {(min(v, t), max(v, t)) for v, t in zip(S, choice)}
+                if len(set(choice)) == len(choice) and len(es) == len(S):
+                    res.add(frozenset(choice))
+            return next(iter(res)) if len(res) == 1 else None
+
+        cnt = 0
+        for mask in range(1, 1 << n):
+            S, seen = frozenset(i for i in range(n) if mask >> i & 1), set()
+            while S is not None and S not in seen:
+                seen.add(S)
+                S = nxt(S)
+            cnt += S is not None
+        return cnt
+
+    for _ in range(60):
+        n = R.randint(2, 8)
+        edges = [(i, R.randrange(i)) for i in range(1, n)]
+        data = f"{n}\n" + "".join(f"{min(a, b) + 1} {max(a, b) + 1}\n" for a, b in edges)
+        assert run("06/arc142_d", data).split() == [str(brute(n, edges))]
+
+
+def test_arc144_c():
+    for n in range(2, 9):
+        for k in range(1, n):
+            exp = next((list(p) for p in itertools.permutations(range(1, n + 1)) if all(abs(p[i] - i - 1) >= k for i in range(n))), None)
+            assert run("06/arc144_c", f"{n} {k}\n").split() == (["-1"] if exp is None else list(map(str, exp)))
+
+
+def test_arc146_d():
+    for _ in range(200):
+        n, m, k = R.randint(2, 4), R.randint(1, 4), R.randint(1, 4)
+        conds = [(*R.sample(range(1, n + 1), 2), R.randint(1, m), R.randint(1, m)) for _ in range(k)]
+        best = None
+        for a in itertools.product(range(1, m + 1), repeat=n):
+            if all((a[p - 1] < x and a[q - 1] < y) or (a[p - 1] == x and a[q - 1] == y) or (a[p - 1] > x and a[q - 1] > y) for p, q, x, y in conds):
+                best = sum(a) if best is None else min(best, sum(a))
+        data = f"{n} {m} {k}\n" + "".join(f"{p} {x} {q} {y}\n" for p, q, x, y in conds)  # 入力は P X Q Y の順
+        assert run("06/arc146_d", data).split() == [str(-1 if best is None else best)]
+
+
+def test_arc151_d():
+    for _ in range(150):
+        n, q = R.randint(1, 4), R.randint(1, 8)
+        a = [R.randint(0, 9) for _ in range(1 << n)]
+        qs = [(R.randrange(n), R.randint(0, 1)) for _ in range(q)]
+        b = a[:]
+        for x, y in qs:  # 問題文どおり j の小さい順に足していく
+            for j in range(1 << n):
+                if (j >> x & 1) == y:
+                    b[j ^ (1 << x)] += b[j]
+        data = f"{n} {q}\n{' '.join(map(str, a))}\n" + "".join(f"{x} {y}\n" for x, y in qs)
+        assert run("06/arc151_d", data).split() == [str(v % 998244353) for v in b]
+
+
+# ---------- Part 7 の推奨問題 ----------
+def test_agc017_c():
+    def can(arr):
+        arr = list(arr)
+        while arr:
+            nxt = [v for v in arr if v != len(arr)]
+            if len(nxt) == len(arr):
+                return False
+            arr = nxt
+        return True
+
+    for _ in range(30):
+        n, m = R.randint(1, 5), R.randint(1, 4)
+        a = [R.randint(1, n) for _ in range(n)]
+        qs = [(R.randint(1, n), R.randint(1, n)) for _ in range(m)]
+        goods = [b for b in itertools.product(range(1, n + 1), repeat=n) if can(b)]
+        cur, exp = a[:], []
+        for x, y in qs:
+            cur[x - 1] = y
+            exp.append(str(min(sum(u != v for u, v in zip(cur, b)) for b in goods)))
+        data = f"{n} {m}\n{' '.join(map(str, a))}\n" + "".join(f"{x} {y}\n" for x, y in qs)
+        assert run("07/agc017_c", data).split() == exp
+
+
+def test_agc018_c():
+    for _ in range(80):
+        x, y, z = R.randint(1, 3), R.randint(1, 3), R.randint(1, 3)
+        ps = [(R.randint(1, 20), R.randint(1, 20), R.randint(1, 20)) for _ in range(x + y + z)]
+        best = max(sum(ps[i][c] for i, c in enumerate(asg)) for asg in set(itertools.permutations([0] * x + [1] * y + [2] * z)))
+        data = f"{x} {y} {z}\n" + "".join(f"{a} {b} {c}\n" for a, b, c in ps)
+        assert run("07/agc018_c", data).split() == [str(best)]
+
+
+def test_agc021_c():
+    import functools
+
+    def feasible(n, m, A, B):
+        @functools.lru_cache(None)
+        def go(pos, mask, a, b):
+            if a == 0 and b == 0:
+                return True
+            if pos == n * m or 2 * (a + b) > n * m - pos:
+                return False
+            if mask & 1:
+                return go(pos + 1, mask >> 1, a, b)
+            i, j = divmod(pos, m)
+            return (
+                go(pos + 1, mask >> 1, a, b)
+                or (a and j + 1 < m and not (mask >> 1 & 1) and go(pos + 1, (mask | 2) >> 1, a - 1, b))
+                or (b and i + 1 < n and go(pos + 1, (mask | (1 << m)) >> 1, a, b - 1))
+            )
+
+        return go(0, 0, A, B)
+
+    def valid(n, m, A, B, out):
+        lines = out.split("\n")
+        g = [l for l in lines[1:] if l]
+        if lines[0] != "YES" or len(g) != n or any(len(r) != m for r in g):
+            return False
+        a = b = 0
+        for i in range(n):
+            for j in range(m):
+                c = g[i][j]
+                if c == "<":
+                    a += 1
+                    if j + 1 >= m or g[i][j + 1] != ">":
+                        return False
+                elif c == "^":
+                    b += 1
+                    if i + 1 >= n or g[i + 1][j] != "v":
+                        return False
+                elif c == ">" and (j == 0 or g[i][j - 1] != "<"):
+                    return False
+                elif c == "v" and (i == 0 or g[i - 1][j] != "^"):
+                    return False
+        return a == A and b == B
+
+    for n in range(1, 5):
+        for m in range(1, 5):
+            for A in range(n * m // 2 + 1):
+                for B in range(n * m // 2 + 1 - A):
+                    out = run("07/agc021_c", f"{n} {m} {A} {B}\n")
+                    assert valid(n, m, A, B, out) if feasible(n, m, A, B) else out.strip() == "NO"
+    for n, m, A, B in [(3, 3, 2, 2), (5, 5, 6, 6), (5, 7, 8, 9), (7, 7, 12, 12)]:  # 風車が要る形
+        assert valid(n, m, A, B, run("07/agc021_c", f"{n} {m} {A} {B}\n"))
+
+
+def test_agc023_c():
+    for n in range(2, 8):
+        tot = 0
+        for p in itertools.permutations(range(1, n)):
+            painted = set()
+            for k, mach in enumerate(p, 1):
+                painted |= {mach, mach + 1}
+                if len(painted) == n:
+                    tot += k
+                    break
+        assert run("07/agc023_c", f"{n}\n").split() == [str(tot % (10**9 + 7))]
+
+
+def test_arc163_d():
+    for n in range(1, 5):
+        pairs = list(itertools.combinations(range(n), 2))
+        tot = {}
+        for bits in itertools.product([0, 1], repeat=len(pairs)):
+            reach = [[i == j for j in range(n)] for i in range(n)]
+            for (i, j), b in zip(pairs, bits):
+                reach[i][j] = reach[i][j] or b == 1
+                reach[j][i] = reach[j][i] or b == 0
+            for k in range(n):
+                for i in range(n):
+                    for j in range(n):
+                        reach[i][j] = reach[i][j] or (reach[i][k] and reach[k][j])
+            scc = len({frozenset(j for j in range(n) if reach[i][j] and reach[j][i]) for i in range(n)})
+            tot[sum(bits)] = tot.get(sum(bits), 0) + scc
+        for m in range(len(pairs) + 1):
+            assert run("07/arc163_d", f"{n} {m}\n").split() == [str(tot.get(m, 0))]
+
+
+def test_arc165_e():
+    from fractions import Fraction
+    from functools import lru_cache
+
+    MOD = 998244353
+    for _ in range(25):
+        n, edges = R.randint(2, 6), None
+        k = R.randint(1, n - 1)
+        edges = [(i, R.randrange(i)) for i in range(1, n)]
+
+        @lru_cache(None)
+        def E(removed):
+            rem = set(removed)
+            comp, sizes = {}, []
+            for s in range(n):
+                if s in comp:
+                    continue
+                st, comp[s], cnt = [s], len(sizes), 0
+                while st:
+                    v = st.pop()
+                    cnt += 1
+                    for a, b in edges:
+                        if a in rem or b in rem:
+                            continue
+                        for x, y in ((a, b), (b, a)):
+                            if x == v and y not in comp:
+                                comp[y] = comp[s]
+                                st.append(y)
+                sizes.append(cnt)
+            cand = [v for v in range(n) if sizes[comp[v]] >= k + 1]
+            if not cand:
+                return Fraction(0)
+            return 1 + sum(E(tuple(sorted(rem | {v}))) for v in cand) / len(cand)
+
+        e = E(())
+        exp = e.numerator % MOD * pow(e.denominator, MOD - 2, MOD) % MOD
+        data = f"{n} {k}\n" + "".join(f"{a + 1} {b + 1}\n" for a, b in edges)
+        assert run("07/arc165_e", data).split() == [str(exp)]
+
+
+def test_arc166_e():
+    cases = [(R.randint(1, 3), *sorted(R.sample(range(1, 7), 2))) for _ in range(60)]
+    out = run("07/arc166_e", f"{len(cases)}\n" + "".join(f"{n} {a} {b}\n" for n, a, b in cases)).split()
+    for idx, (n, a, b) in enumerate(cases):
+        gl, gr = int(out[2 * idx]), int(out[2 * idx + 1])
+        lim, best = 3 * gr + a * b + 10, None
+        for L in range(1, lim):
+            cnt = 0
+            for Rr in range(L, lim):
+                cnt += (Rr % a == 0) - (Rr % b == 0)
+                if cnt == n and (best is None or Rr - L > best[1] - best[0]):
+                    best = (L, Rr)
+        assert (gl, gr) == best
+
+
+def test_arc167_e():
+    def inside(p, t):
+        def cr(o, a, b):
+            return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
+        d = (cr(t[0], t[1], p), cr(t[1], t[2], p), cr(t[2], t[0], p))
+        return all(x >= 0 for x in d) or all(x <= 0 for x in d)
+
+    ss = list(range(1, 120))
+    out = run("07/arc167_e", f"{len(ss)}\n" + "".join(f"{s}\n" for s in ss)).split("\n")
+    it = iter(out)
+    for s in ss:
+        if next(it) == "No":
+            assert s in (1, 2, 3, 5, 7)
+            continue
+        v = list(map(int, next(it).split()))
+        t = [(v[0], v[1]), (v[2], v[3]), (v[4], v[5])]
+        assert abs((t[1][0] - t[0][0]) * (t[2][1] - t[0][1]) - (t[1][1] - t[0][1]) * (t[2][0] - t[0][0])) == s
+        xs, ys = [p[0] for p in t], [p[1] for p in t]
+        squares = sum(
+            all(inside(q, t) for q in ((x, y), (x + 1, y), (x, y + 1), (x + 1, y + 1)))
+            for x in range(min(xs), max(xs))
+            for y in range(min(ys), max(ys))
+        )
+        assert squares == 1
